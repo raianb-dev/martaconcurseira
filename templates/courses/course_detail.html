@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ course.name }} | {{ block.super }}
+{% endblock %}
+
+{% block main %}
+
+    <section class=" py-5 position-relative">
+        <div class="bg-topo">&nbsp;</div>
+        <div class="container position-relative">
+            <div class="row">
+                <div class="col-lg-8 col-sm-12">
+                    <div class="mt-lg-5 mt-sm-3 pb-lg-5 pb-sm-3">
+                        <h1>
+                            {{ course.name }}
+                        </h1>
+                        <p class="text-secondary">
+                            {{ course.short_description }}
+                        </p>
+                        <div class="">
+                            <span>Criado por <a href="#" class="text-decoration-none">{{ course.author }}</a></span>
+                        </div>
+                    </div>
+
+                    <div class="mt-lg-5 mt-sm-3">
+                        <h3>O que você aprenderá</h3>
+
+                        <div class="row mt-3">
+                            {{ course.what_learn|safe }}
+                        </div>
+                    </div>
+                    <div class="mt-lg-3 mt-sm-3">
+                        <h3>Requisitos</h3>
+
+                        <div class="text-secondary">
+                            {{ course.requirements|safe }}
+                        </div>
+                    </div>
+
+                    <div class="mt-lg-3 mt-sm-3">
+                        <h3>Descrição</h3>
+
+                        <div class="text-secondary">
+                            {{ course.description|safe }}
+                        </div>
+                    </div>
+
+                    <div class="mt-lg-3 mt-sm-3">
+                        <h3>Para quem é este curso:</h3>
+
+                        <div class="text-secondary">
+                            {{ course.for_what|safe }}
+                        </div>
+                    </div>
+
+                    <div class="mt-lg-3 mt-sm-3">
+                        <h3>Instrutor(a)</h3>
+
+                        <div class="d-flex position-relative instrutor border-bottom mb-3">
+                            <img src="{{ course.teacher.photo.url }}" class="flex-shrink-0 me-3" alt="{{ course.teacher.name }}" width="144" height="144">
+                            <div>
+                                <h5 class="mt-0">{{ course.teacher.name }}</h5>
+                                <span class="text-secondary mb-2 d-block">{{ course.teacher.background }}</span>
+                                {{ course.teacher.bio|safe }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right -->
+                <div class="col-lg-4 col-sm-12">
+                    <div class="card shadow-sm border-0 position-sticky card-interno">
+                        <a href="#" class="card-img-top">
+                            <img src="{{ course.image.url }}" alt="{{ course.name }}" title="{{ course.name }}" class="card-img-top rounded-top">
+                        </a>
+                        <div class="card-body">
+                            <a href="#" class="text-dark text-decoration-none">
+                                <h3>R$ {{ course.price }}</h3>
+                            </a>
+                        </div>
+                        <div class="card-body bg-white border-top">
+                            <div class="d-flex align-items-center justify-content-center py-2">
+                                <a href="{{ course.url }}" target="_blank" class="btn btn-danger btn-lg px-4">Comprar agora</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

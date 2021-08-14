@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Posts Tag {{ tag }} | {{ block.super }}
+{% endblock title %}
+
+{% block main %}
+
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="py-4 text-center">
+                        <h2 class="display-4 fw-bold text-primary">Blog</h2>
+                        <span class="h4 fw-light">Posts encontrados</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+
+                {% for post in posts %}
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card shadow-sm border-0 mb-4">
+                            <a href="{{ post.get_absolute_url }}" class="card-img-top">
+                                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="card-img-top rounded-top">
+                            </a>
+                            <div class="card-body">
+                                <a href="{{ post.get_absolute_url }}" class="text-dark text-decoration-none">
+                                    <strong>
+                                        {{ post.title }}
+                                    </strong>
+                                </a>
+                                <span class="d-block mt-2 mb-3 text-secondary">{{ post.headline }}</span>
+
+                                <time class="small d-block">{{ post.published_at|timesince }} atrás</time>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <div class="d-flex align-items-center justify-content-center py-2">
+                                    <a href="{{ post.get_absolute_url }}" class="btn btn-danger btn-sm">Leia mais</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+
+                <div class="w-100"></div>
+
+
+            </div>
+
+            {% if posts.paginator.num_pages > 1 %}
+                <div class="row">
+                    <div class="co-12">
+                        <nav aria-label="Page navigation blog">
+                            <ul class="pagination justify-content-center">
+                                {% if posts.number != 1 %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?pagina={{ posts.previous_page_number }}"
+                                           tabindex="-1" aria-disabled="true">Anterior</a>
+                                    </li>
+                                {% endif %}
+
+                                {% for p in posts.paginator.page_range %}
+                                    <li class="page-item"><a class="page-link" href="?pagina={{ p }}">{{ p }}</a></li>
+                                {% endfor %}
+                                {% if posts.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?pagina={{ posts.next_page_number }}">Próximo</a>
+                                    </li>
+                                {% endif %}
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            {% endif %}
+
+
+        </div>
+    </section>
+
+{% endblock main %}

@@ -1,0 +1,33 @@
+body {background: #f7f7f7; font-family: 'Fira Sans', sans-serif}
+
+.star-rating {position: relative}
+.star-rating i {color: #eb8a2f}
+.star-rating strong {color: #eb8a2f}
+
+.bg-topo {background: url("../images/bg_curso.jpg") no-repeat top left; position: absolute; top:0; left: 0; right: 0; min-height: 364px}
+.bg-topo:before {content: ""; background: linear-gradient(to bottom,#fff 0,rgba(255,255,255,.9) 100%);position: absolute; top: 0; right: 0; bottom: 0; right: 0; width: 100%; height: 100%;}
+
+.simbol {font-size: 8px; position: relative; top:-2px}
+
+.list-item-video {padding: 0; margin: 0; list-style: none}
+.list-item-video li {margin-bottom: 14px}
+.list-item-video li i {text-align: center; width: 25px; margin-left: 5px; margin-right: 8px}
+
+.card-interno {top:20px}
+
+.instrutor img {border-radius: 100%; border: 1px solid #e1e1e1}
+
+.nav-tabs .nav-link .font-login {font-size: 25px; font-weight: 200; text-transform: uppercase}
+.nav-tabs .active .font-login {font-size: 25px; font-weight: 500; text-transform: uppercase}
+
+/* BLOGS */
+.avatar-circle img {border-radius: 100%}
+.share a {flex: 0 0 34px;max-width: 34px;height: 34px; display: flex; justify-content: center; align-items: center}
+.btn-soft-secondary {color: #71869d; background-color: rgba(113,134,157,.1); border-color: transparent; font-size: .8rem;}
+.btn-soft-secondary.active,.btn-soft-secondary:active,.btn-soft-secondary:focus,.btn-soft-secondary:hover {color: #fff; background-color: #71869d; box-shadow: 0 4px 11px rgba(113,134,157,.1)}
+.post p {color: #677788}
+
+.list-unstyled li a {text-decoration: none}
+
+/*VIDEOS*/
+.card-img-top i {color: #fff; font-size: 54px; top:50%; left: 50%; margin: -27px 0 0 -27px; border-radius: 100%; box-shadow: 0 0 8px #494949}
