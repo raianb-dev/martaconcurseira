@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Vídeos do nosso canal no YouTube | {{ block.super }}
+{% endblock %}
+
+{% block main %}
+
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="py-4 text-center">
+                        <h2 class="display-4 fw-bold text-primary">{{ last_video.title }}</h2>
+                        <span class="h4 fw-light">{{ last_video.short_description }}</span>
+                    </div>
+                </div>
+
+                <div class="col-10">
+                    <div class="card mb-4">
+                        <div class="ratio ratio-16x9">
+                            {{ last_video.embed|safe }}
+                        </div>
+
+                        <div class="card-body">
+                            <p class="text-secondary">
+                                {{ last_video.text|safe }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-9">
+                    <strong class="h4 d-block fw-bold mb-3 text-primary">Vídeos recentes</strong>
+                </div>
+                <div class="w-100"></div>
+
+                {% for video in videos %}
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card shadow-sm border-0 mb-4">
+                            <a href="{{ video.get_absolute_url }}" class="card-img-top position-relative">
+                                <img src="{{ video.thumbnail.url }}" alt="{{ video.title }}" title="{{ video.title }}"
+                                     class="card-img-top rounded-top">
+                                <i class="fa fa-play-circle position-absolute"></i>
+                            </a>
+                            <div class="card-body">
+                                <a href="{{ video.get_absolute_url }}" class="text-dark text-decoration-none">
+                                    <strong>
+                                        {{ video.title }}
+                                    </strong>
+                                </a>
+                                <time class="small d-block mt-2">Postado há {{ video.created_at|timesince }}
+                                </time>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <div class="d-flex align-items-center justify-content-center py-2">
+                                    <a href="{{ video.get_absolute_url }}" class="btn btn-danger btn-sm">Assistir</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+           {% if videos.paginator.num_pages > 1 %}
+                <div class="row">
+                    <div class="co-12">
+                        <nav aria-label="Page navigation blog">
+                            <ul class="pagination justify-content-center">
+                                {% if videos.number != 1 %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?pagina={{ videos.previous_page_number }}"
+                                           tabindex="-1" aria-disabled="true">Anterior</a>
+                                    </li>
+                                {% endif %}
+
+                                {% for p in videos.paginator.page_range %}
+                                    <li class="page-item"><a class="page-link" href="?pagina={{ p }}">{{ p }}</a></li>
+                                {% endfor %}
+                                {% if videos.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?pagina={{ videos.next_page_number }}">Próximo</a>
+                                    </li>
+                                {% endif %}
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+    </section>
+
+{% endblock %}

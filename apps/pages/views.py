@@ -1,11 +1,13 @@
 import datetime
 
+from django.core.paginator import Paginator
 from django.shortcuts import render
 
 from blog.models import Post
 from courses.models import Course
 
 # Create your views here.
+from pages.models import Video
 
 
 def home(request):
@@ -22,5 +24,25 @@ def home(request):
 
 def about_us(request):
     template_name = 'pages/about_us.html'
+    context = {}
+    return render(request, template_name, context)
+
+
+def videos(request):
+    template_name = 'pages/videos.html'
+    videos = Video.objects.all()
+    last_video = videos.last()
+    paginator = Paginator(videos, 3)
+    page = request.GET.get('pagina')
+    videos = paginator.get_page(page)
+    context = {
+        'videos': videos,
+        'last_video': last_video,
+    }
+    return render(request, template_name, context)
+
+
+def video_detail(request, slug):
+    template_name = 'pages/video_detail.html'
     context = {}
     return render(request, template_name, context)
