@@ -1,7 +1,7 @@
 import datetime
 
 from django.core.paginator import Paginator
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from blog.models import Post
 from courses.models import Course
@@ -44,5 +44,8 @@ def videos(request):
 
 def video_detail(request, slug):
     template_name = 'pages/video_detail.html'
-    context = {}
+    video = get_object_or_404(Video, slug=slug)
+    context = {
+        'video': video,
+    }
     return render(request, template_name, context)
