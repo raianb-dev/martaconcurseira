@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 
 from .models import Course
@@ -6,7 +7,15 @@ from .models import Course
 
 
 def home(request):
-    ...
+    template_name = 'courses/courses.html'
+    courses = Course.objects.all().order_by('-created_at')
+    paginator = Paginator(courses, 12)
+    page = request.GET.get('pagina')
+    courses = paginator.get_page(page)
+    context = {
+        'courses': courses,
+    }
+    return render(request, template_name, context)
 
 
 def course_detail(request, slug):
