@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.6 (Ubuntu 12.6-0ubuntu0.20.04.1)
--- Dumped by pg_dump version 12.6 (Ubuntu 12.6-0ubuntu0.20.04.1)
+-- Dumped from database version 12.8 (Ubuntu 12.8-0ubuntu0.20.04.1)
+-- Dumped by pg_dump version 12.8 (Ubuntu 12.8-0ubuntu0.20.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -556,6 +556,46 @@ ALTER SEQUENCE public.pages_aboutus_id_seq OWNED BY public.pages_aboutus.id;
 
 
 --
+-- Name: pages_video; Type: TABLE; Schema: public; Owner: martauser
+--
+
+CREATE TABLE public.pages_video (
+    id bigint NOT NULL,
+    title character varying(60) NOT NULL,
+    short_description character varying(160) NOT NULL,
+    text text NOT NULL,
+    thumbnail character varying(100) NOT NULL,
+    slug character varying(50) NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    embed text NOT NULL
+);
+
+
+ALTER TABLE public.pages_video OWNER TO martauser;
+
+--
+-- Name: pages_video_id_seq; Type: SEQUENCE; Schema: public; Owner: martauser
+--
+
+CREATE SEQUENCE public.pages_video_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.pages_video_id_seq OWNER TO martauser;
+
+--
+-- Name: pages_video_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: martauser
+--
+
+ALTER SEQUENCE public.pages_video_id_seq OWNED BY public.pages_video.id;
+
+
+--
 -- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: martauser
 --
 
@@ -654,6 +694,13 @@ ALTER TABLE ONLY public.pages_aboutus ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
+-- Name: pages_video id; Type: DEFAULT; Schema: public; Owner: martauser
+--
+
+ALTER TABLE ONLY public.pages_video ALTER COLUMN id SET DEFAULT nextval('public.pages_video_id_seq'::regclass);
+
+
+--
 -- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: martauser
 --
 
@@ -718,6 +765,10 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 42	Can change Curso	11	change_course
 43	Can delete Curso	11	delete_course
 44	Can view Curso	11	view_course
+45	Can add Vídeo	12	add_video
+46	Can change Vídeo	12	change_video
+47	Can delete Vídeo	12	delete_video
+48	Can view Vídeo	12	view_video
 \.
 
 
@@ -726,7 +777,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-1	pbkdf2_sha256$260000$do5hgX8A2Jk5cRiIxGGKVC$DhAkC3UBEo2YDtJNej2bCiBPSkN8RV6vWesN2kQ7Rio=	2021-08-11 13:58:48.24844-03	t	admin			admin@admin.com	t	t	2021-07-14 18:36:27.267091-03
+1	pbkdf2_sha256$260000$do5hgX8A2Jk5cRiIxGGKVC$DhAkC3UBEo2YDtJNej2bCiBPSkN8RV6vWesN2kQ7Rio=	2021-08-14 18:24:39.521551-03	t	admin			admin@admin.com	t	t	2021-07-14 18:36:27.267091-03
 \.
 
 
@@ -829,6 +880,18 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 23	2021-08-11 21:14:58.285761-03	6	Curso Completo de Direito Desportivo 4	1	[{"added": {}}]	11	1
 24	2021-08-11 21:16:45.188408-03	7	Curso Completo de Direito Desportivo 2	1	[{"added": {}}]	11	1
 25	2021-08-11 21:18:22.833412-03	8	Curso Completo de Direito Desportivo 3	1	[{"added": {}}]	11	1
+26	2021-08-14 18:52:16.640446-03	1	Saiu o número de inscritos por região - BB 2021	1	[{"added": {}}]	12	1
+27	2021-08-14 19:10:37.204681-03	2	Os 10 concursos mais esperados de 2021/2022	1	[{"added": {}}]	12	1
+28	2021-08-14 19:12:52.361119-03	3	Mega Revisão de Véspera - Concurso Polícia Militar - AL 2021	1	[{"added": {}}]	12	1
+29	2021-08-14 19:14:42.598114-03	4	Concursos abertos nesta semana	1	[{"added": {}}]	12	1
+30	2021-08-14 19:17:12.773487-03	5	Os 15 melhores concursos de 2021	1	[{"added": {}}]	12	1
+31	2021-08-14 19:19:37.436451-03	6	Concurso TJSP - 2021 - Saiba tudo este concurso neste vídeo	1	[{"added": {}}]	12	1
+32	2021-08-14 19:30:33.714861-03	6	Concurso TJSP - 2021 - Saiba tudo este concurso neste vídeo	2	[{"changed": {"fields": ["C\\u00f3digo Incorpora\\u00e7\\u00e3o"]}}]	12	1
+33	2021-08-14 21:39:30.896034-03	1	Saiu o número de inscritos por região - BB 2021	2	[{"changed": {"fields": ["C\\u00f3digo Incorpora\\u00e7\\u00e3o"]}}]	12	1
+34	2021-08-14 21:41:04.460178-03	2	Os 10 concursos mais esperados de 2021/2022	2	[{"changed": {"fields": ["C\\u00f3digo Incorpora\\u00e7\\u00e3o"]}}]	12	1
+35	2021-08-14 21:41:29.524053-03	5	Os 15 melhores concursos de 2021	2	[{"changed": {"fields": ["C\\u00f3digo Incorpora\\u00e7\\u00e3o"]}}]	12	1
+36	2021-08-14 21:41:55.408236-03	4	Concursos abertos nesta semana	2	[{"changed": {"fields": ["C\\u00f3digo Incorpora\\u00e7\\u00e3o"]}}]	12	1
+37	2021-08-14 21:42:28.538172-03	3	Mega Revisão de Véspera - Concurso Polícia Militar - AL 2021	2	[{"changed": {"fields": ["C\\u00f3digo Incorpora\\u00e7\\u00e3o"]}}]	12	1
 \.
 
 
@@ -848,6 +911,7 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 9	blog	post
 10	courses	teacher
 11	courses	course
+12	pages	video
 \.
 
 
@@ -884,6 +948,9 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 26	courses	0002_course	2021-07-15 17:41:00.656584-03
 27	courses	0003_auto_20210715_1746	2021-07-15 17:46:21.683762-03
 28	courses	0004_course_url	2021-07-15 17:53:03.689262-03
+29	pages	0003_video	2021-08-14 18:21:36.259484-03
+30	pages	0004_alter_video_text	2021-08-14 18:24:02.038104-03
+31	pages	0005_auto_20210814_1930	2021-08-14 19:30:10.687552-03
 \.
 
 
@@ -895,6 +962,7 @@ COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
 twfqvwkjzu4p8cpiwimqaq3gv97l482w	.eJxVjMEOwiAQRP-FsyEsdEE8evcbyC5QqRpISnsy_rtt0oNe5jDvzbxFoHUpYe15DlMSFwHi9NsxxWeuO0gPqvcmY6vLPLHcFXnQLm8t5df1cP8OCvWyrQkHdtGbNG6B1isDSQMjDIjOqIyMTnsc81k5k1ATOGSwKgIaQG_F5wu9kzZP:1m40VU:7H8x9aZdtT65buhcgBZh1sW4pzW3Wc_zTcf0N1T8l8Q	2021-07-29 09:30:24.282923-03
 vmhrka2qzvkbgwmz37tmg4fjh5u5vddl	.eJxVjMEOwiAQRP-FsyEsdEE8evcbyC5QqRpISnsy_rtt0oNe5jDvzbxFoHUpYe15DlMSFwHi9NsxxWeuO0gPqvcmY6vLPLHcFXnQLm8t5df1cP8OCvWyrQkHdtGbNG6B1isDSQMjDIjOqIyMTnsc81k5k1ATOGSwKgIaQG_F5wu9kzZP:1m4oYZ:DH0fdfi5GrSRyOBv0bVDAHcYq5N5uYXY5J5YruJBbVU	2021-07-31 14:56:55.736616-03
 ass04t9znw2hnictxxds7jc9clint5wh	.eJxVjMEOwiAQRP-FsyEsdEE8evcbyC5QqRpISnsy_rtt0oNe5jDvzbxFoHUpYe15DlMSFwHi9NsxxWeuO0gPqvcmY6vLPLHcFXnQLm8t5df1cP8OCvWyrQkHdtGbNG6B1isDSQMjDIjOqIyMTnsc81k5k1ATOGSwKgIaQG_F5wu9kzZP:1mDrZ2:ktZIaC0qIe6BLTDmqJjgHqCDIlETBULSkGly9MtacPk	2021-08-25 13:58:48.259299-03
+bd0u1veg5ivdqh6kt6ir50e2fk7gdtky	.eJxVjMEOwiAQRP-FsyEsdEE8evcbyC5QqRpISnsy_rtt0oNe5jDvzbxFoHUpYe15DlMSFwHi9NsxxWeuO0gPqvcmY6vLPLHcFXnQLm8t5df1cP8OCvWyrQkHdtGbNG6B1isDSQMjDIjOqIyMTnsc81k5k1ATOGSwKgIaQG_F5wu9kzZP:1mF18x:Cy8LxOpByMKP1A7CPF6KYGnS1VDpfYvwyN7NfXJXZfY	2021-08-28 18:24:39.523666-03
 \.
 
 
@@ -904,6 +972,20 @@ ass04t9znw2hnictxxds7jc9clint5wh	.eJxVjMEOwiAQRP-FsyEsdEE8evcbyC5QqRpISnsy_rtt0o
 
 COPY public.pages_aboutus (id, title_page, text_page) FROM stdin;
 1	Conheça nossa história!	<div>\r\n<p>At Front, our mission has always been focused on bringing openness and transparency to the design process. We&#39;ve always believed that by providing a space where designers can share ongoing work not only empowers them to make better products, it also helps them grow. We&#39;re proud to be a part of creating a more open culture and to continue building a product that supports this vision.</p>\r\n\r\n<p>As we&#39;ve grown, we&#39;ve seen how Front has helped companies such as Spotify, Microsoft, Airbnb, Facebook, and Intercom bring their designers closer together to create amazing things. We&#39;ve also learned that when the culture of sharing is brought in earlier, the better teams adapt and communicate with one another.</p>\r\n\r\n<p>That&#39;s why we are excited to share that we now have a free version of Front, which will allow individual designers, startups and other small teams a chance to create a culture of openness early on.</p>\r\n\r\n<p><strong>Bringing the culture of sharing to everyone</strong></p>\r\n\r\n<p>We know the power of sharing is real, and we want to create an opportunity for everyone to try Front and explore how transformative open communication can be. Now you can have a team of one or two designers and unlimited spectators (think PMs, management, marketing, etc.) share work and explore the design process earlier.</p>\r\n\r\n<p>Small teams and individual designers need a space where they can watch the design process unfold, both for themselves and for the people they work with &ndash; no matter if it&#39;s a fellow designer, product manager, developer or client. Front allows you to invite more people into the process, creating a central place for conversation around design. As those teams grow, transparency and collaboration becomes integrated in how they communicate and work together.</p>\r\n\r\n<p>We will continue to update Front; if you have any questions or suggestions, please contact us!</p>\r\n</div>
+\.
+
+
+--
+-- Data for Name: pages_video; Type: TABLE DATA; Schema: public; Owner: martauser
+--
+
+COPY public.pages_video (id, title, short_description, text, thumbnail, slug, created_at, updated_at, embed) FROM stdin;
+2	Os 10 concursos mais esperados de 2021/2022	Veja os concursos mais aguardados do ano.	<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n\r\n<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n\r\n<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>	images/Concursos-2021_Facebook-2.jpg	os-10-concursos-mais-esperados-de-20212022	2021-08-14 19:10:37.204029-03	2021-08-14 21:41:04.459434-03	<iframe width="1280" height="720" src="https://www.youtube.com/embed/pFv2HRPEuRA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+4	Concursos abertos nesta semana	Veja a lista dos concursos abertos da semana	<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of &quot;de Finibus Bonorum et Malorum&quot; (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, &quot;Lorem ipsum dolor sit amet..&quot;, comes from a line in section 1.10.32.</p>\r\n\r\n<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of &quot;de Finibus Bonorum et Malorum&quot; (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, &quot;Lorem ipsum dolor sit amet..&quot;, comes from a line in section 1.10.32.</p>	images/concursos-abertos-1024x576.webp	concursos-abertos-nesta-semana	2021-08-14 19:14:42.597551-03	2021-08-14 21:41:55.407423-03	<iframe width="1280" height="720" src="https://www.youtube.com/embed/UISD_rTRuCo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+3	Mega Revisão de Véspera - Concurso Polícia Militar - AL 2021	Não perca esta revisão por nada!	<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using &#39;Content here, content here&#39;, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for &#39;lorem ipsum&#39; will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>\r\n\r\n<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using &#39;Content here, content here&#39;, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for &#39;lorem ipsum&#39; will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>	images/concurso-pmal.png	mega-revisao-de-vespera-concurso-policia-militar-a	2021-08-14 19:12:52.36036-03	2021-08-14 21:42:28.537447-03	<iframe width="1280" height="720" src="https://www.youtube.com/embed/CTbnaUj5TlE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+6	Concurso TJSP - 2021 - Saiba tudo este concurso neste vídeo	Dúvidas em relação o concurso do TJSP? Vem cá, vou te esclarecer todas!	<p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from &quot;de Finibus Bonorum et Malorum&quot; by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>\r\n\r\n<p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from &quot;de Finibus Bonorum et Malorum&quot; by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>\r\n\r\n<p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from &quot;de Finibus Bonorum et Malorum&quot; by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>	images/tjsp.png	concurso-tjsp-2021-saiba-tudo-este-concurso-neste	2021-08-14 19:19:37.435727-03	2021-08-14 19:30:33.71367-03	<iframe width="1280" height="720" src="https://www.youtube.com/embed/IXlO7XC9ju0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+1	Saiu o número de inscritos por região - BB 2021	Descubra nesse vídeo com quantas pessoas você vai disputar uma vaga.	<p>Voc&ecirc; sabe com quantas pessoas vai disputar uma vaga no Concurso do Banco do Brasil 2021? Saiba agora nesse v&iacute;deos.</p>\r\n\r\n<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n\r\n<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>	images/sddefault.jpg	saiu-o-numero-de-inscritos-por-regiao-bb-2021	2021-08-14 18:52:16.638969-03	2021-08-14 21:39:30.895252-03	<iframe width="1280" height="720" src="https://www.youtube.com/embed/5jxybdXUsa0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+5	Os 15 melhores concursos de 2021	Está indeciso qual concurso fazer? Veja nossa dica com os 15 melhores.	<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#39;t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn&#39;t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>\r\n\r\n<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#39;t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn&#39;t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>	images/maxresdefault1.jpg	os-15-melhores-concursos-de-2021	2021-08-14 19:17:12.772953-03	2021-08-14 21:41:29.523325-03	<iframe width="1280" height="720" src="https://www.youtube.com/embed/hLpdIEIK0Zo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 \.
 
 
@@ -925,7 +1007,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: martauser
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 44, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 48, true);
 
 
 --
@@ -981,21 +1063,21 @@ SELECT pg_catalog.setval('public.courses_teacher_id_seq', 5, true);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: martauser
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 25, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 37, true);
 
 
 --
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: martauser
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 11, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 12, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: martauser
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 28, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 31, true);
 
 
 --
@@ -1003,6 +1085,13 @@ SELECT pg_catalog.setval('public.django_migrations_id_seq', 28, true);
 --
 
 SELECT pg_catalog.setval('public.pages_aboutus_id_seq', 1, true);
+
+
+--
+-- Name: pages_video_id_seq; Type: SEQUENCE SET; Schema: public; Owner: martauser
+--
+
+SELECT pg_catalog.setval('public.pages_video_id_seq', 6, true);
 
 
 --
@@ -1206,6 +1295,22 @@ ALTER TABLE ONLY public.pages_aboutus
 
 
 --
+-- Name: pages_video pages_video_pkey; Type: CONSTRAINT; Schema: public; Owner: martauser
+--
+
+ALTER TABLE ONLY public.pages_video
+    ADD CONSTRAINT pages_video_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: pages_video pages_video_slug_key; Type: CONSTRAINT; Schema: public; Owner: martauser
+--
+
+ALTER TABLE ONLY public.pages_video
+    ADD CONSTRAINT pages_video_slug_key UNIQUE (slug);
+
+
+--
 -- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: martauser
 --
 
@@ -1336,6 +1441,13 @@ CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING 
 --
 
 CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: pages_video_slug_5df431cc_like; Type: INDEX; Schema: public; Owner: martauser
+--
+
+CREATE INDEX pages_video_slug_5df431cc_like ON public.pages_video USING btree (slug varchar_pattern_ops);
 
 
 --
