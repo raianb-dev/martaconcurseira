@@ -1,7 +1,7 @@
 import datetime
 
 from django.core.paginator import Paginator
-from django.http.response import BadHeaderError
+from django.http.response import BadHeaderError, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 
@@ -76,4 +76,24 @@ def contact(request):
     context = {
         'form': form
     }
+    return render(request, template_name, context)
+
+
+def search_bar(request):
+    course = request.GET.get('course')
+    payload = []
+    if course:
+        courses = Course.objects.filter(name__icontains=course)
+        for course in courses:
+            payload.append(course.name)
+    return JsonResponse({'status': 200, 'data': payload})
+
+
+def search_result(request):
+    template_name = 'courses/course_detail.html'
+    course_name = request.GET.get('curso')
+    context = {}
+    if course_name:
+        course = Course.objects.filter(name=course_name).first()
+        context['course'] = course
     return render(request, template_name, context)
