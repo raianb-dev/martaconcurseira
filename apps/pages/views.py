@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 
 from blog.models import Post
 from courses.models import Course
+from pages.models import AboutUs
 
 # Create your views here.
 from pages.models import Video
@@ -24,7 +25,10 @@ def home(request):
 
 def about_us(request):
     template_name = 'pages/about_us.html'
-    context = {}
+    about = AboutUs.objects.last()
+    context = {
+        'about': about,
+    }
     return render(request, template_name, context)
 
 
