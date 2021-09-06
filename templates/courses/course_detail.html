@@ -58,7 +58,9 @@
                         <h3>Instrutor(a)</h3>
 
                         <div class="d-flex position-relative instrutor border-bottom mb-3">
-                            <img src="{{ course.teacher.photo.url }}" class="flex-shrink-0 me-3" alt="{{ course.teacher.name }}" width="144" height="144">
+                            {% if course.teacher.photo %}
+                                <img src="{{ course.teacher.photo.url }}" class="flex-shrink-0 me-3" alt="{{ course.teacher.name }}" width="144" height="144">
+                            {% endif %}
                             <div>
                                 <h5 class="mt-0">{{ course.teacher.name }}</h5>
                                 <span class="text-secondary mb-2 d-block">{{ course.teacher.background }}</span>
