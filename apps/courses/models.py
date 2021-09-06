@@ -35,8 +35,8 @@ class Teacher(models.Model):
 
 
 class Course(models.Model):
-    name = models.CharField('Nome', max_length=100)
-    short_description = models.CharField('Descrição curta', max_length=160)
+    name = models.CharField('Nome', max_length=100, help_text='Tente criar um título de 60 caracteres no máximo.')
+    short_description = models.CharField('Descrição curta', max_length=160, help_text='Tente criar uma descrição de até 160 caracteres.')
     author = models.CharField('Criado por', max_length=150)
     price = models.DecimalField('Preço', max_digits=19, decimal_places=2,
                                 help_text='Informe o valor sem o símbolo da moeda.')
