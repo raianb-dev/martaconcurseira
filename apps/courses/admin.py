@@ -13,3 +13,4 @@ class TeacherAdmin(admin.ModelAdmin):
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
     list_display = ['name', 'teacher', 'price']
+    list_filter = ['platform', 'teacher']
