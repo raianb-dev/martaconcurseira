@@ -1,14 +1,18 @@
 import datetime
 
 from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404
+from django.http.response import BadHeaderError
+from django.shortcuts import redirect, render, get_object_or_404
+from django.contrib import messages
 
 from blog.models import Post
 from courses.models import Course
 from pages.models import AboutUs
+from pages.models import Video
+
+from .forms import ContactForm
 
 # Create your views here.
-from pages.models import Video
 
 
 def home(request):
@@ -51,5 +55,25 @@ def video_detail(request, slug):
     video = get_object_or_404(Video, slug=slug)
     context = {
         'video': video,
+    }
+    return render(request, template_name, context)
+
+
+def contact(request):
+    template_name = 'pages/contact.html'
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            template_email = 'pages/email.txt'
+            try:
+                form.send_email(form, ['fandrefh@gmail.com'], template_email)
+            except BadHeaderError:
+                messages.error(request, 'Error. Mensagem não enviada.')
+            messages.success(request, 'Mensagem enviada com sucesso.')
+            return redirect('pages:contact')
+    else:
+        form = ContactForm()
+    context = {
+        'form': form
     }
     return render(request, template_name, context)

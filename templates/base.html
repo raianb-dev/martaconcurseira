@@ -62,8 +62,19 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " href="{% url 'pages:about_us' %}">Sobre nós</a>
-                    </li>
+                    </li>   
+                    <li class="nav-item">
+                        <a class="nav-link " href="{% url 'pages:contact' %}">Contato</a>
+                    </li>   
                 </ul>
+                <form action="" class="row ">
+                    <div class="col ps-lg-5">
+                        <input type="text" placeholder="Procuro por..." class="form-control">
+                    </div>
+                    <div class="col ps-0">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -88,6 +99,7 @@
                     <li><a href="{% url 'blog:blog_home' %}" class="p-3 text-decoration-none d-block">Blog</a></li>
                     <li><a href="{% url 'pages:videos' %}" class="p-3 text-decoration-none d-block">Vídeos</a></li>
                     <li><a href="{% url 'pages:about_us' %}" class="p-3 text-decoration-none d-block">Sobre nós</a></li>
+                    <li><a href="{% url 'pages:contact' %}" class="p-3 text-decoration-none d-block">Contato</a></li>
                 </ul>
             </div>
 
