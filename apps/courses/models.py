@@ -10,6 +10,8 @@ from ckeditor.fields import RichTextField
 class Platform(models.Model):
     name = models.CharField('Plataforma', max_length=150, help_text='Ex: Hotmart, Monetizze')
     slug = AutoSlugField('Slug', populate_from='name', unique=True, help_text='Preencimento automático')
+    created_at = models.DateTimeField('Criado em', auto_now_add=True)
+    updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 
     class Meta:
         verbose_name = 'Plataforma'
@@ -25,6 +27,8 @@ class Teacher(models.Model):
     background = models.CharField('Formação', max_length=150)
     bio = RichTextField('Biográfia')
     photo = models.ImageField('Foto', upload_to='photos', blank=True, null=True)
+    created_at = models.DateTimeField('Criado em', auto_now_add=True)
+    updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 
     class Meta:
         verbose_name = 'Professor'
@@ -49,6 +53,7 @@ class Course(models.Model):
     url = models.URLField('Link de Compra')
     is_active = models.BooleanField('Curso Ativo?', default=True, help_text='Somente cursos ativos serão visíveis.')
     platform = models.ForeignKey(Platform, verbose_name='Plataforma', blank=True, null=True, on_delete=models.SET_NULL)
+    course_id = models.CharField('Código do Curso', max_length=50, blank=True, null=True)
     slug = AutoSlugField('URL Única', populate_from='name', unique=True, help_text='Preenchimento automático')
     created_at = models.DateTimeField('Criado em', auto_now_add=True)
     updated_at = models.DateTimeField('Atualizado em', auto_now=True)
@@ -56,6 +61,7 @@ class Course(models.Model):
     class Meta:
         verbose_name = 'Curso'
         verbose_name_plural = 'Cursos'
+        unique_together = ['platform', 'course_id']
 
     def __str__(self) -> str:
         return self.name

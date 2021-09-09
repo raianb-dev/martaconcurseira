@@ -10,6 +10,8 @@ from autoslug import AutoSlugField
 class AboutUs(models.Model):
     title_page = models.CharField('Título da Página', max_length=150)
     text_page = RichTextField('Texto')
+    created_at = models.DateTimeField('Cirado em', auto_now_add=True)
+    updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 
     class Meta:
         verbose_name = 'Sobre nós'

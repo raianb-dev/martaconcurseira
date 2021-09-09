@@ -7,10 +7,11 @@ from .models import AboutUs, Video
 
 @admin.register(AboutUs)
 class AboutUsAdmin(admin.ModelAdmin):
-    list_display = ['title_page']
+    list_display = ['title_page', 'created_at', 'updated_at']
 
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
-    list_display = ['title']
+    list_display = ['title', 'created_at', 'updated_at']
+    search_fields = ['title']
     readonly_fields = ['slug']
