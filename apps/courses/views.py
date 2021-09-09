@@ -20,8 +20,10 @@ def home(request):
 
 def course_detail(request, slug):
     template_name = 'courses/course_detail.html'
+    courses = Course.objects.order_by('-created_at')[:4]
     course = get_object_or_404(Course, slug=slug)
     context = {
         'course': course,
+        'courses': courses,
     }
     return render(request, template_name, context)
