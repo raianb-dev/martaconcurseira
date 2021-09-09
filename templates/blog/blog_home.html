@@ -20,18 +20,18 @@
                     <div class="card mb-4">
                         <div class="row g-0">
                             <div class="col-md-4">
-                                <img src="{{ last_post.image.url }}" alt="{{ last_post.title }}"
-                                     class="card-img-top rounded">
+                                <a href="{{ last_post.get_absolute_url }}"><img src="{{ last_post.image.url }}" alt="{{ last_post.title }}"
+                                     class="card-img-top rounded"></a>
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h4 class="card-title">{{ last_post.title }}</h4>
+                                    <a href="{{ last_post.get_absolute_url }}" style="text-decoration:none;color:black"><h4 class="card-title">{{ last_post.title }}</h4></a>
                                     <p class="card-text text-secondary">{{ last_post.headline }}</p>
                                     <time class="small d-block">{{ last_post.published_at|timesince }}</time>
                                 </div>
                                 <div class="card-footer bg-white">
                                     <div class="d-flex align-items-center justify-content-center pt-2">
-                                        <a href="#" class="btn btn-danger btn-sm">Leia mais</a>
+                                        <a href="{{ last_post.get_absolute_url }}" class="btn btn-danger btn-sm">Leia mais</a>
                                     </div>
                                 </div>
                             </div>
