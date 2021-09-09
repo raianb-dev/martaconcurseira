@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 from autoslug import AutoSlugField
 
 # Create your models here.
@@ -28,7 +29,7 @@ class Post(models.Model):
     title = models.CharField('Título', max_length=100, help_text='Recomendado de no máximo 60 caracteres no título.')
     headline = models.CharField('Subtítulo', max_length=160,
                                 help_text='Uma pequena descrição do texto, será usada também para o SEO.')
-    content = RichTextField('Conteúdo')
+    content = RichTextUploadingField('Conteúdo')
     category = models.ForeignKey(Category, verbose_name='Categoria', null=True, on_delete=models.SET_NULL)
     author = models.ForeignKey(User, verbose_name='Autor', on_delete=models.CASCADE)
     tags = models.CharField('Tags', max_length=50, help_text='Separe as tags por vírgula. Máximo de 50 caracteres.')
