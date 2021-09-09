@@ -55,6 +55,7 @@ PROJECT_APPS = [
     'pages.apps.PagesConfig',
     'courses.apps.CoursesConfig',
     'blog.apps.BlogConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + PROJECT_APPS
