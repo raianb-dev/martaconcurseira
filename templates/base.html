@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://unpkg.com/@trevoreyre/autocomplete-js/dist/style.css" />
+    <link rel="icon" href="{% static 'images/favicon-marta-32x32.png' %}" type="image/x-icon" />
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800&display=swap"
@@ -104,14 +105,26 @@
 
             <div class="col-lg-5 col-sm-12">
                 <ul class="nav justify-content-lg-end">
-                    <li><a href="#" class="p-3 text-decoration-none d-block"> <img
-                            src="{% static 'images/facebook.svg' %}" alt=""></a></li>
-                    <li><a href="#" class="p-3 text-decoration-none d-block"> <img
-                            src="{% static 'images/twitter.svg' %}" alt=""></a></li>
-                    <li><a href="#" class="p-3 text-decoration-none d-block"> <img
-                            src="{% static 'images/linkedin.svg' %}" alt=""></a></li>
-                    <li><a href="#" class="p-3 text-decoration-none d-block"> <img
-                            src="{% static 'images/instagram.svg' %}" alt=""></a></li>
+                    {% if social %}
+                    {% for s in social %}
+                        {% if s.network == 1 %}
+                        <li><a href="#" class="p-3 text-decoration-none d-block"> <img
+                                src="{% static 'images/instagram.svg' %}" alt=""></a></li>
+                        {% elif s.network == 2 %}
+                        <li><a href="#" class="p-3 text-decoration-none d-block"> <img
+                                src="{% static 'images/facebook.svg' %}" alt=""></a></li>
+                        {% elif s.network == 3 %}
+                        <li><a href="#" class="p-3 text-decoration-none d-block"> <img
+                                src="{% static 'images/youtube.svg' %}" alt=""></a></li>
+                        {% elif s.network == 4 %}
+                        <li><a href="#" class="p-3 text-decoration-none d-block"> <img
+                                src="{% static 'images/linkedin.svg' %}" alt=""></a></li>
+                        {% elif s.network == 5 %}
+                        <li><a href="#" class="p-3 text-decoration-none d-block"> <img
+                                src="{% static 'images/linkedin.svg' %}" alt=""></a></li>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
                 </ul>
             </div>
 

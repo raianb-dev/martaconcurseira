@@ -46,3 +46,23 @@ class Video(models.Model):
     def get_absolute_url(self):
         from django.urls import reverse
         return reverse('pages:video_detail', kwargs={'slug': self.slug})
+
+
+
+class SocialNetwork(models.Model):
+    SOCIAL_NETWORK_CHOICES = (
+        (1, 'Instagram'),
+        (2, 'Facebook'),
+        (3, 'YouTube'),
+        (4, 'Linkedin'),
+        (5, 'Twitter'),
+    )
+    network = models.PositiveBigIntegerField('Rede Social', choices=SOCIAL_NETWORK_CHOICES)
+    profile_url = models.URLField('URL do perfil', help_text='Ex: https://instagram.com/martaconcurseira')
+
+    class Meta:
+        verbose_name = 'Rede Social'
+        verbose_name_plural = 'Redes Sociais'
+    
+    def __str__(self):
+        return self.profile_url

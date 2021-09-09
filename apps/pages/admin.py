@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import AboutUs, Video
+from .models import AboutUs, Video, SocialNetwork
 
 # Register your models here.
 
@@ -15,3 +15,9 @@ class VideoAdmin(admin.ModelAdmin):
     list_display = ['title', 'created_at', 'updated_at']
     search_fields = ['title']
     readonly_fields = ['slug']
+
+
+@admin.register(SocialNetwork)
+class SocialNetworkAdmin(admin.ModelAdmin):
+    list_display = ['network', 'profile_url']
+    search_fields = ['network', 'profile_url']
