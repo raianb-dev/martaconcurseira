@@ -14,8 +14,11 @@
 Obs: as instruções serão repassadas considerando o Ubuntu ou outro sistema operacional baseado no Debian.
 
 `sudo apt update`
+
 `sudo apt upgrade -y`
+
 `sudo apt install build-essential -y`
+
 `sudo apt install python3-dev python3-venv python3-pip libssl-dev libffi-dev libpq-dev libjpeg8-dev zlib1g-dev -y`
 
 Caso não tenha instalado ainda, instale o PostgreSQL
@@ -25,14 +28,19 @@ Caso não tenha instalado ainda, instale o PostgreSQL
 Use os comandos abaixo para conectar no PostgreSQL e criar o banco o de dados.
 
 `sudo su postgres`
+
 `psql`
+
 `create role martaconcurseirauser with login createdb password 'password123';`
+
 `create database martaconcurseiradb owner martauser;`
 
 Para sair do interpretador de comandos do PostgreSQL, use o comando abaixo.
 
 `\q`
+
 ou
+
 `quit`
 
 ## Escolha um diretório de trabalho
@@ -40,6 +48,7 @@ ou
 ### Crie um ambiente virtual
 
 `python3 -m venv vmarta`
+
 `source vmarta/bin/activate`
 
 ### Clone o repositório do projeto
