@@ -101,7 +101,7 @@ Digite a senha do usuário do banco de dados **martaconcurseirauser**, se tiver 
 
 ### Diretório de mídias
 
-Copie o diretório **media** de dentro do diretório **project** para o primeiro nível do diretório do projeto, o diretório **martaconcurseira**.
+Descompacte e renomeia o diretório media_.tar.gz, remova somente o caractere "_" do nome do diretório. Copie o diretório **media** de dentro do diretório **project** para o primeiro nível do diretório do projeto, o diretório **martaconcurseira**.
 
 ### Para rodar o servidor de desenvolvimento
 
