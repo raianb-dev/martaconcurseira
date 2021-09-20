@@ -49,6 +49,8 @@ ou
 
 `python3 -m venv vmarta`
 
+### Para ativar o ambiente
+
 `source vmarta/bin/activate`
 
 ### Clone o repositório do projeto
