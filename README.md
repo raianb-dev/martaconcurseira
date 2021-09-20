@@ -87,6 +87,22 @@ EMAIL_HOST_USER=contatomartaconcurseira@gmail.com
 EMAIL_HOST_PASSWORD=marta3030
 ```
 
+### Importação do banco de dados
+
+Para importar a base de dados local, a partir do diretório *project* que está dentro do diretório principal do projeto (martaconcurseira), digite o seguinte comando:
+
+`sudo su postgres`
+
+Informe a senha do seu usuário Linux, se tiver, claro.
+
+`psql -h localhost -U martaconcurseirauser martaconcurseiradb < martaconcurseiradb.sql`
+
+Digite a senha do usuário do banco de dados *martaconcurseirauser*, se tiver seguido os passos anteriors, a senha é *password123*.
+
+### Diretório de mídias
+
+Copie o diretório *media* de dentro do diretório *project* para o primeiro nível do diretório do projeto, o diretório *martaconcurseira*.
+
 ### Para rodar o servidor de desenvolvimento
 
 A partir do diretório principal do projeto (martaconcurseira) e no terminal.
