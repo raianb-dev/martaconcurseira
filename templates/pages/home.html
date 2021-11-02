@@ -10,57 +10,62 @@
 
     <section class="bg-white py-5 border-bottom">
         <div class="container">
-            <div class="row  align-items-center">
-                <div class="col-lg-5 col-sm-12">
-                    <img src="{% static 'images/teste/reading.svg' %}" alt="Banner Leitura" title="Banner Leitura" width="445" height="388">
-                </div>
-
-                <div class="col-lg-7 col-sm-12 text-center">
-                    <div class="w-75 m-auto">
-                        <h2 class="d-block text-primary">CURSOS ONLINE para você ser APROVADO</h2>
-                        <span class="text-secondary">
-                            Aprenda tudo o que precisa para passar no concurso que você tanto deseja.
-                        </span>
+            {% if block1_banner %}
+                <div class="row  align-items-center">
+                    <div class="col-lg-5 col-sm-12">
+                        <img src="{{ block1_banner.image.url }}" alt="{{ block1_banner.title }}" title="{{ block1_banner.title }}" width="445" height="388">
+                    </div>
+                    <div class="col-lg-7 col-sm-12 text-center">
+                        <div class="w-75 m-auto">
+                            <h2 class="d-block text-primary">{{ block1_banner.title }}</h2>
+                            <span class="text-secondary">
+                                {{ block1_banner.text|safe }}
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
     </section>
 
     <section class="bg-white shadow-sm mb-4 py-4">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 col-sm-12">
-                    <div class="d-flex align-items-center">
-                        <i class="me-2"><img src="{% static 'images/clock.svg' %}" alt="Saia na frente" title="Saia na frente" width="60"
-                                             height="60"></i>
-                        <div>
-                            <strong class="d-block text-danger">Saia na frente</strong>
-                            <span class="text-secondary">Não perca tempo, escolha seu curso e comece hoje mesmo a se preparar!</span>
+                {% if block2_banner %}
+                    <div class="col-lg-4 col-sm-12">
+                        <div class="d-flex align-items-center">
+                            <i class="me-2"><img src="{{ block2_banner.image.url }}" alt="{{ block2_banner.title }}" title="{{ block2_banner.title }}" width="60"
+                                                 height="60"></i>
+                            <div>
+                                <strong class="d-block text-danger">{{ block2_banner.title }}</strong>
+                                <span class="text-secondary">{{ block2_banner.text|safe }}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-lg-4 col-sm-12">
-                    <div class="d-flex align-items-center">
-                        <i class="me-2"><img src="{% static 'images/cofre.svg' %}" alt="Cursos com o menor custo" title="Cursos com o menor custo" width="60"
-                                             height="60"></i>
-                        <div>
-                            <strong class="d-block text-danger">Cursos com o menor custo</strong>
-                            <span class="text-secondary">A melhor relação custo x benefícios, confira!</span>
+                {% endif %}
+                {% if block3_banner %}
+                    <div class="col-lg-4 col-sm-12">
+                        <div class="d-flex align-items-center">
+                            <i class="me-2"><img src="{{ block3_banner.image.url }}" alt="{{ block3_banner.title }}" title="{{ block3_banner.title }}" width="60"
+                                                 height="60"></i>
+                            <div>
+                                <strong class="d-block text-danger">{{ block3_banner.title }}</strong>
+                                <span class="text-secondary">{{ block3_banner.text|safe }}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-lg-4 col-sm-12">
-                    <div class="d-flex align-items-center">
-                        <i class="me-2"><img src="{% static 'images/celo.svg' %}" alt="Seja aprovado" title="Seja aprovado" width="60" height="60"></i>
-                        <div>
-                            <strong class="d-block text-danger">Seja aprovado</strong>
-                            <span class="text-secondary">Estude com os nossos cursos e seja aprovado nos melhores concursos.</span>
+                {% endif %}
+                {% if block4_banner %}
+                    <div class="col-lg-4 col-sm-12">
+                        <div class="d-flex align-items-center">
+                            <i class="me-2"><img src="{{ block4_banner.image.url }}" alt="{{ block4_banner.title }}" title="{{ block4_banner.title }}" width="60" height="60"></i>
+                            <div>
+                                <strong class="d-block text-danger">{{ block4_banner.title }}</strong>
+                                <span class="text-secondary">{{ block4_banner.text|safe }}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
         </div>
     </section>
@@ -235,30 +240,28 @@
         </script>
     </div>
 
-    <section class="bg-white pt-lg-5 pt-sm-3 mb-lg-5 mb-sm-3">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-12">
-                    <div class="d-flex justify-content-center align-items-center pb-4">
-                        <h2 class="text-primary">Sonha com aquela vaga que paga um ótimo salário?</h2>
+    {% if block5_banner %}
+        <section class="bg-white pt-lg-5 pt-sm-3 mb-lg-5 mb-sm-3">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-center align-items-center pb-4">
+                            <h2 class="text-primary">{{ block5_banner.title }}</h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <img src="{{ block5_banner.image.url }}" alt="{{ block5_banner.title }}" title="{{ block5_banner.title }}" class="img-fluid">
+                    </div>
+
+                    <div class="col-lg-6 col-sm-12">
+                        {{ block5_banner.text|safe }}
+
+                        <a href="{% url 'courses:home' %}" class="btn btn-danger btn-lg rounded">Conheça nossos cursos</a>
                     </div>
                 </div>
-                <div class="col-lg-6 col-sm-12">
-                    <img src="{% static 'images/img_curso.png' %}" alt="Sonha com aquela vaga que paga um ótimo salário?" title="Sonha com aquela vaga que paga um ótimo salário?" class="img-fluid">
-                </div>
-
-                <div class="col-lg-6 col-sm-12">
-                    <p>Imagine você trabalhando com o que mais gosta e ainda com um baita salário e cheio de benefícios... Imaginou?</p>
-                    <p>Agora, para que você possa conseguir seu objetivo, o primeiro passo é se preparar e quando o assunto é preparação, nossa equipe de curadores é especialista
-                    em encontrar os melhores cursos, todos são selecionados após um extenso processo de verificação que vai desde a grade do curso até a qualidade dos professores.</p>
-
-                    <p>Em nosso site você encontrará o curso certo para sua preparação, navegue mais pelo nosso site e se tiver dúvidas, não hesite em entrar em contato.</p>
-
-                    <a href="{% url 'courses:home' %}" class="btn btn-danger btn-lg rounded">Conheça nossos cursos</a>
-                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    {% endif %}
 
     <section>
         <div class="container">

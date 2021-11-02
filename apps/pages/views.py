@@ -7,8 +7,7 @@ from django.contrib import messages
 
 from blog.models import Post
 from courses.models import Course
-from pages.models import AboutUs
-from pages.models import Video
+from pages.models import AboutUs, Video, Banner
 
 from .forms import ContactForm
 
@@ -18,11 +17,21 @@ from .forms import ContactForm
 def home(request):
     template_name = 'pages/home.html'
     posts = Post.objects.filter(is_active=True,
-                               published_at__lte=datetime.datetime.today()).order_by('-published_at')[:4]
+                                published_at__lte=datetime.datetime.today()).order_by('-published_at')[:4]
     courses = Course.objects.order_by('-created_at')[:8]
+    block1_banner = Banner.objects.filter(block=1).first()
+    block2_banner = Banner.objects.filter(block=2).first()
+    block3_banner = Banner.objects.filter(block=3).first()
+    block4_banner = Banner.objects.filter(block=4).first()
+    block5_banner = Banner.objects.filter(block=5).first()
     context = {
         'posts': posts,
         'courses': courses,
+        'block1_banner': block1_banner,
+        'block2_banner': block2_banner,
+        'block3_banner': block3_banner,
+        'block4_banner': block4_banner,
+        'block5_banner': block5_banner,
     }
     return render(request, template_name, context)
 

@@ -13,7 +13,7 @@ class CharsLeftInput(forms.TextInput, MediaMixin):
     def render(self, name, value, attrs=None, renderer=None):
         if value is None:
             value = ''
-        final_attrs = self.build_attrs(self.attrs, {'type': self.input_type, 'name': name})
+        final_attrs = self.build_attrs(self.attrs, {'type': self.input_type, 'name': name, 'class': 'vTextField'})
         if value != '':
             final_attrs['value'] = force_text(value)
         maxlength = final_attrs.get('maxlength', False)

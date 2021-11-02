@@ -1,4 +1,4 @@
-jQuery.fn.charsLeft = function (options) {
+$.fn.charsLeft = function (options) {
 
     var defaults = {
         'source': 'input',

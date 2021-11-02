@@ -72,11 +72,13 @@ class Banner(models.Model):
         (1, 'Bloco 1'),
         (2, 'Bloco 2'),
         (3, 'Bloco 3'),
+        (4, 'Bloco 4'),
+        (5, 'Bloco 5'),
     )
     block = models.PositiveBigIntegerField('Bloco', choices=BLOCK_CHOICES)
-    image = models.ImageField('Imagem', upload_to='images/banners')
+    image = models.FileField('Imagem', upload_to='images/banners')
     title = models.CharField('Título', max_length=100)
-    text = models.TextField('Texto', blank=True, null=True)
+    text = RichTextField('Texto', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Banner'
