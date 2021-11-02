@@ -351,6 +351,40 @@ ALTER SEQUENCE public.blog_post_id_seq OWNED BY public.blog_post.id;
 
 
 --
+-- Name: courses_category; Type: TABLE; Schema: public; Owner: martaconcurseirauser
+--
+
+CREATE TABLE public.courses_category (
+    id bigint NOT NULL,
+    name character varying(100) NOT NULL,
+    slug character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.courses_category OWNER TO martaconcurseirauser;
+
+--
+-- Name: courses_category_id_seq; Type: SEQUENCE; Schema: public; Owner: martaconcurseirauser
+--
+
+CREATE SEQUENCE public.courses_category_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.courses_category_id_seq OWNER TO martaconcurseirauser;
+
+--
+-- Name: courses_category_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: martaconcurseirauser
+--
+
+ALTER SEQUENCE public.courses_category_id_seq OWNED BY public.courses_category.id;
+
+
+--
 -- Name: courses_course; Type: TABLE; Schema: public; Owner: martaconcurseirauser
 --
 
@@ -360,10 +394,7 @@ CREATE TABLE public.courses_course (
     short_description character varying(160) NOT NULL,
     author character varying(150) NOT NULL,
     price numeric(19,2) NOT NULL,
-    what_learn text NOT NULL,
-    requirements text NOT NULL,
     description text NOT NULL,
-    for_what text NOT NULL,
     image character varying(100) NOT NULL,
     teacher_id bigint NOT NULL,
     created_at timestamp with time zone NOT NULL,
@@ -372,7 +403,8 @@ CREATE TABLE public.courses_course (
     updated_at timestamp with time zone NOT NULL,
     url character varying(200) NOT NULL,
     platform_id bigint,
-    course_id character varying(50)
+    course_id character varying(50),
+    category_id bigint
 );
 
 
@@ -442,8 +474,8 @@ ALTER SEQUENCE public.courses_platform_id_seq OWNED BY public.courses_platform.i
 CREATE TABLE public.courses_teacher (
     id bigint NOT NULL,
     name character varying(100) NOT NULL,
-    background character varying(150) NOT NULL,
-    bio text NOT NULL,
+    background character varying(150),
+    bio text,
     photo character varying(100),
     created_at timestamp with time zone NOT NULL,
     updated_at timestamp with time zone NOT NULL
@@ -634,6 +666,43 @@ ALTER SEQUENCE public.pages_aboutus_id_seq OWNED BY public.pages_aboutus.id;
 
 
 --
+-- Name: pages_banner; Type: TABLE; Schema: public; Owner: martaconcurseirauser
+--
+
+CREATE TABLE public.pages_banner (
+    id bigint NOT NULL,
+    block bigint NOT NULL,
+    image character varying(100) NOT NULL,
+    title character varying(100) NOT NULL,
+    text text,
+    CONSTRAINT pages_banner_block_check CHECK ((block >= 0))
+);
+
+
+ALTER TABLE public.pages_banner OWNER TO martaconcurseirauser;
+
+--
+-- Name: pages_banner_id_seq; Type: SEQUENCE; Schema: public; Owner: martaconcurseirauser
+--
+
+CREATE SEQUENCE public.pages_banner_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.pages_banner_id_seq OWNER TO martaconcurseirauser;
+
+--
+-- Name: pages_banner_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: martaconcurseirauser
+--
+
+ALTER SEQUENCE public.pages_banner_id_seq OWNED BY public.pages_banner.id;
+
+
+--
 -- Name: pages_socialnetwork; Type: TABLE; Schema: public; Owner: martaconcurseirauser
 --
 
@@ -772,6 +841,13 @@ ALTER TABLE ONLY public.blog_post ALTER COLUMN id SET DEFAULT nextval('public.bl
 
 
 --
+-- Name: courses_category id; Type: DEFAULT; Schema: public; Owner: martaconcurseirauser
+--
+
+ALTER TABLE ONLY public.courses_category ALTER COLUMN id SET DEFAULT nextval('public.courses_category_id_seq'::regclass);
+
+
+--
 -- Name: courses_course id; Type: DEFAULT; Schema: public; Owner: martaconcurseirauser
 --
 
@@ -818,6 +894,13 @@ ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('p
 --
 
 ALTER TABLE ONLY public.pages_aboutus ALTER COLUMN id SET DEFAULT nextval('public.pages_aboutus_id_seq'::regclass);
+
+
+--
+-- Name: pages_banner id; Type: DEFAULT; Schema: public; Owner: martaconcurseirauser
+--
+
+ALTER TABLE ONLY public.pages_banner ALTER COLUMN id SET DEFAULT nextval('public.pages_banner_id_seq'::regclass);
 
 
 --
@@ -924,6 +1007,14 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 58	Can change Perfil	15	change_profile
 59	Can delete Perfil	15	delete_profile
 60	Can view Perfil	15	view_profile
+61	Can add Categoria	16	add_category
+62	Can change Categoria	16	change_category
+63	Can delete Categoria	16	delete_category
+64	Can view Categoria	16	view_category
+65	Can add Banner	17	add_banner
+66	Can change Banner	17	change_banner
+67	Can delete Banner	17	delete_banner
+68	Can view Banner	17	view_banner
 \.
 
 
@@ -932,7 +1023,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-1	pbkdf2_sha256$260000$do5hgX8A2Jk5cRiIxGGKVC$DhAkC3UBEo2YDtJNej2bCiBPSkN8RV6vWesN2kQ7Rio=	2021-09-09 10:07:47.874365-03	t	admin			admin@admin.com	t	t	2021-07-14 18:36:27.267091-03
+1	pbkdf2_sha256$260000$do5hgX8A2Jk5cRiIxGGKVC$DhAkC3UBEo2YDtJNej2bCiBPSkN8RV6vWesN2kQ7Rio=	2021-11-01 17:31:48.21512-03	t	admin			admin@admin.com	t	t	2021-07-14 18:36:27.267091-03
 \.
 
 
@@ -978,18 +1069,27 @@ COPY public.blog_post (id, title, content, tags, slug, is_active, published_at, 
 
 
 --
+-- Data for Name: courses_category; Type: TABLE DATA; Schema: public; Owner: martaconcurseirauser
+--
+
+COPY public.courses_category (id, name, slug) FROM stdin;
+1	Informática	informatica
+\.
+
+
+--
 -- Data for Name: courses_course; Type: TABLE DATA; Schema: public; Owner: martaconcurseirauser
 --
 
-COPY public.courses_course (id, name, short_description, author, price, what_learn, requirements, description, for_what, image, teacher_id, created_at, is_active, slug, updated_at, url, platform_id, course_id) FROM stdin;
-1	Curso Completo de Direito Desportivo	O curso tem por objetivo fomentar o estudo da matéria, transmitir os conhecimentos, os princípios básicos e trazer uma perspectiva do mercado de trabalho no	Ana Paula Terra	290.00	<p>Em um curso completo de 19 aulas, 100% online, voc&ecirc; vai desvendar todo o contexto jur&iacute;dico que envolve as modalidades esportivas.</p>\r\n\r\n<p>Os melhores e mais gabaritados Professores foram reunidos para te mostrar, com total exclusividade, a experi&ecirc;ncia pr&aacute;tica nos contratos utilizados no Direito Desportivo.</p>\r\n\r\n<p>Estude as cl&aacute;usulas de um contrato de trabalho de um atleta profissional e todo funcionamento da justi&ccedil;a desportiva no nosso pa&iacute;s.&nbsp;</p>	<p>Nenhum</p>	<p>poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?</p>\r\n\r\n<p>... estudar com detalhes cl&aacute;usulas espec&iacute;ficas de contratos envolvendo atletas profissionais e patroc&iacute;nio?</p>\r\n\r\n<p>... conhecer a estrutura da Justi&ccedil;a Desportiva no Brasil e o Direito Desportivo do Trabalho ao lado de quem realmente tem experi&ecirc;ncia para transmitir?</p>	<p>Concurseiros</p>	images/adv.jpeg	1	2021-08-11 19:52:01.108228-03	t	curso-completo-de-direito-desportivo	2021-08-11 19:52:01.108257-03	https://cursodireitodesportivo.com.br/?ref=O55542594S	\N	\N
-2	Nova correção	E-BOOK COM MAIS DE 1200 QUESTÕES DOS PRINCIPAIS CONCURSOS	Josyeldo	323.99	<p>Aprender 1</p>\r\n\r\n<p>Aprender 2</p>\r\n\r\n<p>Aprender 3</p>	<p>Nenhum</p>	<div>\r\n<div>\r\n<div>\r\n<div>\r\n<div>\r\n<div>\r\n<div>\r\n<div>\r\n<p>Voc&ecirc; est&aacute; na jornada para conquistar sua vaga por meio de um CONCURSO ou outro tipo de avalia&ccedil;&atilde;o classificat&oacute;ria na &aacute;rea da Enfermagem/T&eacute;c Enfermagem?</p>\r\n\r\n<p>Criamos nossas apostilas para poder te ajudar nesta luta, reunimos as melhores quest&otilde;es de concursos e espec&iacute;ficas da &aacute;rea da Enfermagem/T&eacute;c Enfermagem e alguns materiais de b&ocirc;nus para te ajudar ainda mais e tudo isto com um pre&ccedil;o muito BAIXO!</p>\r\n\r\n<p>J&aacute; &eacute; comprovado que incluir quest&otilde;es no seu estudo aumenta e muito sua chance de sucesso, j&aacute; disponibilizamos nosso material para mais de 5mil estudantes e s&oacute; recebemos elogios e feedbacks de &oacute;timos resultados nas avalia&ccedil;&otilde;es.&nbsp;<br />\r\n<br />\r\nN&atilde;o cometa o erro de estudar em cima da hora pois devido a import&acirc;ncia que se foi dada a &aacute;rea da sa&uacute;de devido aos acontecimentos recentes j&aacute; se tramita a abertura de muitos concursos para nossa &aacute;rea al&eacute;m de outras vagas no mercado!</p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>	<p>Concurseiros</p>	images/curso-de-direito-saiba-tudo-sobre-direito-e-como-se-tornar-advogado-capa-principal.jpg	4	2021-08-11 20:07:02.619577-03	t	nova-correcao	2021-08-11 20:07:02.619611-03	https://superenfs.life/?mcr=ASD16723473	\N	\N
-3	O ebook 500 questões de educação física para concursos	O ebook 500 questões de educação física para concursos é um material completo para todos que desejam a aprovação em concursos para professor de educação física.	Marcos Felipe	4567.00	<p>Tudo sobre educa&ccedil;&atilde;o f&iacute;sica</p>	<p>Nenhum</p>	<h3>S&atilde;o 500 quest&otilde;es gabaritadas de conhecimentos espec&iacute;ficos de provas e concursos dos &uacute;ltimos 2 anos. As quest&otilde;es abrange os conte&uacute;dos mais recorrentes de conhecimentos espec&iacute;ficos em concursos p&uacute;blicos.</h3>	<p>Concurseiros</p>	images/curso-de-matematica-basica-gratis.jpg	5	2021-08-11 20:39:22.786324-03	t	o-ebook-500-questoes-de-educacao-fisica-para-concu	2021-08-11 20:39:22.786372-03	https://paginas10.com.br/questoesparaconcursos/?mcr=AVW16723510	\N	\N
-4	Curso Completo de Direito Desportivo 2	O curso tem por objetivo fomentar o estudo da matéria, transmitir os conhecimentos, os princípios básicos e trazer uma perspectiva do mercado de trabalho no	Marcos Felipe	233.99	<p>Tudo sobre direito esportivo. Tudo sobre direito esportivo. Tudo sobre direito esportivo. Tudo sobre direito esportivo. Tudo sobre direito esportivo. Tudo sobre direito esportivo. Tudo sobre direito esportivo. Tudo sobre direito esportivo. Tudo sobre direito esportivo.</p>	<p>Nenhum</p>	<div>\r\n<div>\r\n<div>\r\n<p>... poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?</p>\r\n\r\n<p>... estudar com detalhes cl&aacute;usulas espec&iacute;ficas de contratos envolvendo atletas profissionais e patroc&iacute;nio?</p>\r\n\r\n<p>... conhecer a estrutura da Justi&ccedil;a Desportiva no Brasil e o Direito Desportivo do Trabalho ao lado de quem realmente tem experi&ecirc;ncia para transmitir?</p>\r\n</div>\r\n</div>\r\n</div>	<p>Concurseiros</p>	images/direitoesportivo.jpeg	3	2021-08-11 21:04:51.455737-03	t	curso-completo-de-direito-desportivo-2	2021-08-11 21:04:51.455786-03	https://cursodireitodesportivo.com.br/?ref=O55542594S	\N	\N
-5	Curso Completo de Direito Desportivo 3	O curso tem por objetivo fomentar o estudo da matéria, transmitir os conhecimentos, os princípios básicos e trazer uma perspectiva do mercado de trabalho no	Ana Paula Terra	341.99	<div>\r\n<div>\r\n<div>\r\n<p>... poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?</p>\r\n\r\n<p>... estudar com detalhes cl&aacute;usulas espec&iacute;ficas de contratos envolvendo atletas profissionais e patroc&iacute;nio?</p>\r\n\r\n<p>... conhecer a estrutura da Justi&ccedil;a Desportiva no Brasil e o Direito Desportivo do Trabalho ao lado de quem realmente tem experi&ecirc;ncia para transmitir?</p>\r\n</div>\r\n</div>\r\n</div>	<p>Nenhum</p>	<div>\r\n<div>\r\n<div>\r\n<p>... poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?</p>\r\n\r\n<p>... estudar com detalhes cl&aacute;usulas espec&iacute;ficas de contratos envolvendo atletas profissionais e patroc&iacute;nio?</p>\r\n\r\n<p>... conhecer a estrutura da Justi&ccedil;a Desportiva no Brasil e o Direito Desportivo do Trabalho ao lado de quem realmente tem experi&ecirc;ncia para transmitir?</p>\r\n\r\n<div>\r\n<div>\r\n<div>\r\n<p>... poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?</p>\r\n\r\n<p>... estudar com detalhes cl&aacute;usulas espec&iacute;ficas de contratos envolvendo atletas profissionais e patroc&iacute;nio?</p>\r\n\r\n<p>... conhecer a estrutura da Justi&ccedil;a Desportiva no Brasil e o Direito Desportivo do Trabalho ao lado de quem realmente tem experi&ecirc;ncia para transmitir?</p>\r\n\r\n<div>\r\n<div>\r\n<div>\r\n<p>... poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?</p>\r\n\r\n<p>... estudar com detalhes cl&aacute;usulas espec&iacute;ficas de contratos envolvendo atletas profissionais e patroc&iacute;nio?</p>\r\n\r\n<p>... conhecer a estrutura da Justi&ccedil;a Desportiva no Brasil e o Direito Desportivo do Trabalho ao lado de quem realmente tem experi&ecirc;ncia para transmitir?</p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>	<p>Quem deseja conhecer tudo sobre o direito esportivo</p>	images/direitoesportivo_icnpGT5.jpeg	5	2021-08-11 21:06:30.015056-03	t	curso-completo-de-direito-desportivo-3	2021-08-11 21:06:30.015101-03	https://cursodireitodesportivo.com.br/?ref=O55542594S	\N	\N
-6	Curso Completo de Direito Desportivo 4	Poder ter acesso a um Curso Completo, com aulas teóricas e práticas ao lado dos melhores Professores e um material completíssimo e totalmente atualizado?	Ana Paula Terra	345.00	<p>poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?</p>	<p>Nenhum</p>	<p>poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?</p>	<p>Advogados, desportistas, t&eacute;cnicos ou atletas</p>	images/direitoesportivo_fcjTMWW.jpeg	5	2021-08-11 21:14:58.283897-03	t	curso-completo-de-direito-desportivo-4	2021-08-11 21:14:58.283929-03	https://cursodireitodesportivo.com.br/?ref=O55542594S	\N	\N
-7	Curso Completo de Direito Desportivo 2	E-BOOK COM MAIS DE 1200 QUESTÕES DOS PRINCIPAIS CONCURSOS	Marcos Felipe	230.97	<p>O curso é direcionado a todos os profissionais que estejam ligados à área desportiva ou que pretendam iniciar agora (estudantes, agentes, advogados, profissionais de educação física etc.)</p>	<p>Nenhum</p>	<p>O curso é direcionado a todos os profissionais que estejam ligados à área desportiva ou que pretendam iniciar agora (estudantes, agentes, advogados, profissionais de educação física etc.)O curso é direcionado a todos os profissionais que estejam ligados à área desportiva ou que pretendam iniciar agora (estudantes, agentes, advogados, profissionais de educação física etc.)O curso é direcionado a todos os profissionais que estejam ligados à área desportiva ou que pretendam iniciar agora (estudantes, agentes, advogados, profissionais de educação física etc.)O curso é direcionado a todos os profissionais que estejam ligados à área desportiva ou que pretendam iniciar agora (estudantes, agentes, advogados, profissionais de educação física etc.)O curso é direcionado a todos os profissionais que estejam ligados à área desportiva ou que pretendam iniciar agora (estudantes, agentes, advogados, profissionais de educação física etc.)</p>	<p>Advogas em geral</p>	images/direitoesportivo_wkUW0MR.jpeg	1	2021-08-11 21:16:45.182556-03	t	curso-completo-de-direito-desportivo-2-2	2021-08-11 21:16:45.182622-03	https://paginas10.com.br/questoesparaconcursos/?mcr=AVW16723510	\N	\N
-8	Curso Completo de Direito Desportivo 3	O curso tem por objetivo fomentar o estudo da matéria, transmitir os conhecimentos, os princípios básicos e trazer uma perspectiva do mercado de trabalho no	Francisco André	674.97	<p>Poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?Poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?Poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?</p>	<p>Nenhum</p>	<p>Poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?Poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?Poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?Poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?Poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?Poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?</p>	<p>Advogados e concurseiros de plant&atilde;o</p>	images/direitoesportivo_x5b8F19.jpeg	4	2021-08-11 21:18:22.829846-03	t	curso-completo-de-direito-desportivo-3-2	2021-08-11 21:18:22.829891-03	https://cursodireitodesportivo.com.br/?ref=O55542594S	\N	\N
+COPY public.courses_course (id, name, short_description, author, price, description, image, teacher_id, created_at, is_active, slug, updated_at, url, platform_id, course_id, category_id) FROM stdin;
+1	Curso Completo de Direito Desportivo	O curso tem por objetivo fomentar o estudo da matéria, transmitir os conhecimentos, os princípios básicos e trazer uma perspectiva do mercado de trabalho no	Ana Paula Terra	290.00	<p>poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?</p>\r\n\r\n<p>... estudar com detalhes cl&aacute;usulas espec&iacute;ficas de contratos envolvendo atletas profissionais e patroc&iacute;nio?</p>\r\n\r\n<p>... conhecer a estrutura da Justi&ccedil;a Desportiva no Brasil e o Direito Desportivo do Trabalho ao lado de quem realmente tem experi&ecirc;ncia para transmitir?</p>	images/adv.jpeg	1	2021-08-11 19:52:01.108228-03	t	curso-completo-de-direito-desportivo	2021-08-11 19:52:01.108257-03	https://cursodireitodesportivo.com.br/?ref=O55542594S	\N	\N	\N
+2	Nova correção	E-BOOK COM MAIS DE 1200 QUESTÕES DOS PRINCIPAIS CONCURSOS	Josyeldo	323.99	<div>\r\n<div>\r\n<div>\r\n<div>\r\n<div>\r\n<div>\r\n<div>\r\n<div>\r\n<p>Voc&ecirc; est&aacute; na jornada para conquistar sua vaga por meio de um CONCURSO ou outro tipo de avalia&ccedil;&atilde;o classificat&oacute;ria na &aacute;rea da Enfermagem/T&eacute;c Enfermagem?</p>\r\n\r\n<p>Criamos nossas apostilas para poder te ajudar nesta luta, reunimos as melhores quest&otilde;es de concursos e espec&iacute;ficas da &aacute;rea da Enfermagem/T&eacute;c Enfermagem e alguns materiais de b&ocirc;nus para te ajudar ainda mais e tudo isto com um pre&ccedil;o muito BAIXO!</p>\r\n\r\n<p>J&aacute; &eacute; comprovado que incluir quest&otilde;es no seu estudo aumenta e muito sua chance de sucesso, j&aacute; disponibilizamos nosso material para mais de 5mil estudantes e s&oacute; recebemos elogios e feedbacks de &oacute;timos resultados nas avalia&ccedil;&otilde;es.&nbsp;<br />\r\n<br />\r\nN&atilde;o cometa o erro de estudar em cima da hora pois devido a import&acirc;ncia que se foi dada a &aacute;rea da sa&uacute;de devido aos acontecimentos recentes j&aacute; se tramita a abertura de muitos concursos para nossa &aacute;rea al&eacute;m de outras vagas no mercado!</p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>	images/curso-de-direito-saiba-tudo-sobre-direito-e-como-se-tornar-advogado-capa-principal.jpg	4	2021-08-11 20:07:02.619577-03	t	nova-correcao	2021-08-11 20:07:02.619611-03	https://superenfs.life/?mcr=ASD16723473	\N	\N	\N
+3	O ebook 500 questões de educação física para concursos	O ebook 500 questões de educação física para concursos é um material completo para todos que desejam a aprovação em concursos para professor de educação física.	Marcos Felipe	4567.00	<h3>S&atilde;o 500 quest&otilde;es gabaritadas de conhecimentos espec&iacute;ficos de provas e concursos dos &uacute;ltimos 2 anos. As quest&otilde;es abrange os conte&uacute;dos mais recorrentes de conhecimentos espec&iacute;ficos em concursos p&uacute;blicos.</h3>	images/curso-de-matematica-basica-gratis.jpg	5	2021-08-11 20:39:22.786324-03	t	o-ebook-500-questoes-de-educacao-fisica-para-concu	2021-08-11 20:39:22.786372-03	https://paginas10.com.br/questoesparaconcursos/?mcr=AVW16723510	\N	\N	\N
+4	Curso Completo de Direito Desportivo 2	O curso tem por objetivo fomentar o estudo da matéria, transmitir os conhecimentos, os princípios básicos e trazer uma perspectiva do mercado de trabalho no	Marcos Felipe	233.99	<div>\r\n<div>\r\n<div>\r\n<p>... poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?</p>\r\n\r\n<p>... estudar com detalhes cl&aacute;usulas espec&iacute;ficas de contratos envolvendo atletas profissionais e patroc&iacute;nio?</p>\r\n\r\n<p>... conhecer a estrutura da Justi&ccedil;a Desportiva no Brasil e o Direito Desportivo do Trabalho ao lado de quem realmente tem experi&ecirc;ncia para transmitir?</p>\r\n</div>\r\n</div>\r\n</div>	images/direitoesportivo.jpeg	3	2021-08-11 21:04:51.455737-03	t	curso-completo-de-direito-desportivo-2	2021-08-11 21:04:51.455786-03	https://cursodireitodesportivo.com.br/?ref=O55542594S	\N	\N	\N
+5	Curso Completo de Direito Desportivo 3	O curso tem por objetivo fomentar o estudo da matéria, transmitir os conhecimentos, os princípios básicos e trazer uma perspectiva do mercado de trabalho no	Ana Paula Terra	341.99	<div>\r\n<div>\r\n<div>\r\n<p>... poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?</p>\r\n\r\n<p>... estudar com detalhes cl&aacute;usulas espec&iacute;ficas de contratos envolvendo atletas profissionais e patroc&iacute;nio?</p>\r\n\r\n<p>... conhecer a estrutura da Justi&ccedil;a Desportiva no Brasil e o Direito Desportivo do Trabalho ao lado de quem realmente tem experi&ecirc;ncia para transmitir?</p>\r\n\r\n<div>\r\n<div>\r\n<div>\r\n<p>... poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?</p>\r\n\r\n<p>... estudar com detalhes cl&aacute;usulas espec&iacute;ficas de contratos envolvendo atletas profissionais e patroc&iacute;nio?</p>\r\n\r\n<p>... conhecer a estrutura da Justi&ccedil;a Desportiva no Brasil e o Direito Desportivo do Trabalho ao lado de quem realmente tem experi&ecirc;ncia para transmitir?</p>\r\n\r\n<div>\r\n<div>\r\n<div>\r\n<p>... poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?</p>\r\n\r\n<p>... estudar com detalhes cl&aacute;usulas espec&iacute;ficas de contratos envolvendo atletas profissionais e patroc&iacute;nio?</p>\r\n\r\n<p>... conhecer a estrutura da Justi&ccedil;a Desportiva no Brasil e o Direito Desportivo do Trabalho ao lado de quem realmente tem experi&ecirc;ncia para transmitir?</p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>	images/direitoesportivo_icnpGT5.jpeg	5	2021-08-11 21:06:30.015056-03	t	curso-completo-de-direito-desportivo-3	2021-08-11 21:06:30.015101-03	https://cursodireitodesportivo.com.br/?ref=O55542594S	\N	\N	\N
+6	Curso Completo de Direito Desportivo 4	Poder ter acesso a um Curso Completo, com aulas teóricas e práticas ao lado dos melhores Professores e um material completíssimo e totalmente atualizado?	Ana Paula Terra	345.00	<p>poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?</p>	images/direitoesportivo_fcjTMWW.jpeg	5	2021-08-11 21:14:58.283897-03	t	curso-completo-de-direito-desportivo-4	2021-08-11 21:14:58.283929-03	https://cursodireitodesportivo.com.br/?ref=O55542594S	\N	\N	\N
+7	Curso Completo de Direito Desportivo 2	E-BOOK COM MAIS DE 1200 QUESTÕES DOS PRINCIPAIS CONCURSOS	Marcos Felipe	230.97	<p>O curso é direcionado a todos os profissionais que estejam ligados à área desportiva ou que pretendam iniciar agora (estudantes, agentes, advogados, profissionais de educação física etc.)O curso é direcionado a todos os profissionais que estejam ligados à área desportiva ou que pretendam iniciar agora (estudantes, agentes, advogados, profissionais de educação física etc.)O curso é direcionado a todos os profissionais que estejam ligados à área desportiva ou que pretendam iniciar agora (estudantes, agentes, advogados, profissionais de educação física etc.)O curso é direcionado a todos os profissionais que estejam ligados à área desportiva ou que pretendam iniciar agora (estudantes, agentes, advogados, profissionais de educação física etc.)O curso é direcionado a todos os profissionais que estejam ligados à área desportiva ou que pretendam iniciar agora (estudantes, agentes, advogados, profissionais de educação física etc.)</p>	images/direitoesportivo_wkUW0MR.jpeg	1	2021-08-11 21:16:45.182556-03	t	curso-completo-de-direito-desportivo-2-2	2021-08-11 21:16:45.182622-03	https://paginas10.com.br/questoesparaconcursos/?mcr=AVW16723510	\N	\N	\N
+8	Curso Completo de Direito Desportivo 3	O curso tem por objetivo fomentar o estudo da matéria, transmitir os conhecimentos, os princípios básicos e trazer uma perspectiva do mercado de trabalho no	Francisco André	674.97	<p>Poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?Poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?Poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?Poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?Poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?Poder ter acesso a um Curso Completo, com aulas te&oacute;ricas e pr&aacute;ticas ao lado dos melhores Professores e um material complet&iacute;ssimo e totalmente atualizado?</p>	images/direitoesportivo_x5b8F19.jpeg	4	2021-08-11 21:18:22.829846-03	t	curso-completo-de-direito-desportivo-3-2	2021-08-11 21:18:22.829891-03	https://cursodireitodesportivo.com.br/?ref=O55542594S	\N	\N	\N
 \.
 
 
@@ -998,6 +1098,7 @@ COPY public.courses_course (id, name, short_description, author, price, what_lea
 --
 
 COPY public.courses_platform (id, name, slug, created_at, updated_at) FROM stdin;
+1	Hotmart	hotmart	2021-11-02 11:31:15.913715-03	2021-11-02 11:31:15.913729-03
 \.
 
 
@@ -1010,6 +1111,7 @@ COPY public.courses_teacher (id, name, background, bio, photo, created_at, updat
 3	Fábia A. e Outros	Advogada	<p>Advogada</p>		2021-09-09 09:51:35.555927-03	2021-09-09 09:51:35.566353-03
 4	Cristiano Caús	Mestre em Direito	<p>Gradua&ccedil;&atilde;o Acad&ecirc;mica: Mestre em Direito Internacional do Esporte pelo Instituto Superior de Derecho y Econom&iacute;a, de Madrid, Espanha (2015); MBA em Gest&atilde;o e Marketing Esportivo pela Trevisan Escola de Neg&oacute;cios (2013); Especializa&ccedil;&atilde;o em Direito do Trabalho e Processo do Trabalho e Processo do Trabalho pela Escola Paulista de Direito (2007); Especializa&ccedil;&atilde;o em Direito Desportivo pela Faculdade de Direito de S&atilde;o Bernardo do Campo (2005); e Gradua&ccedil;&atilde;o em Direito pela Faculdade de Direito de S&atilde;o Bernardo do Campo (1999). Magist&eacute;rio: Professor titular de MBA em Gest&atilde;o e Marketing Esportivo da Trevisan Escola de Neg&oacute;cios, desde 2005; Professor de P&oacute;s-Gradua&ccedil;&atilde;o em Direito Desportivo do INEJE-RS; Coordenador e tutor dos cursos de Gest&atilde;o Executiva em Gest&atilde;o do Esporte na Trevisan Escola de Neg&oacute;cios. Publica&ccedil;&atilde;o: Autor do livro Direito Aplicado &agrave; Gest&atilde;o do Esporte, Trevisan Editora, S&atilde;o Paulo: 2013.</p>	photos/cristiano-caus.png	2021-09-09 09:51:35.555927-03	2021-09-09 09:51:35.566353-03
 5	Danielle Maiolini	Advogada	<p>Mestranda em Direito do Trabalho na Faculdade de Direito da UFMG. Graduada em Direito pela Universidade Federal de Minas Gerais (2013); P&oacute;s-Graduada em Direito do Trabalho pela Universidade de Coimbra; P&oacute;s-Graduada em Direito Desportivo e Neg&oacute;cios do Esporte pelo Centro de Direito Internacional (CEDIN). Co-coordenadora do Grupo de Estudos em Direito Desportivo da UFMG; Professora no Curso de P&oacute;s-Gradua&ccedil;&atilde;o em Direito Desportivo e Neg&oacute;cios do Esporte no Centro de Direito Internacional (CEDIN); Procuradora no STJD de Futebol; Membro da Comiss&atilde;o de Direito Desportivo da OAB/MG.</p>	photos/danielle-maiolini-mendes.png	2021-09-09 09:51:35.555927-03	2021-09-09 09:51:35.566353-03
+6	Professor Raimundo	\N			2021-11-02 11:31:00.743203-03	2021-11-02 11:31:00.743219-03
 \.
 
 
@@ -1059,6 +1161,21 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 39	2021-09-09 15:41:26.948237-03	6	Prefeito tenta garantir novos concursos Olinda PE, após dez anos	2	[{"changed": {"fields": ["Conte\\u00fado"]}}]	9	1
 40	2021-09-09 15:42:24.993444-03	6	Prefeito tenta garantir novos concursos Olinda PE, após dez anos	2	[{"changed": {"fields": ["Conte\\u00fado"]}}]	9	1
 41	2021-09-09 16:49:54.498836-03	2	admin	1	[{"added": {}}]	15	1
+42	2021-11-02 10:37:42.434104-03	1	Informática	1	[{"added": {}}]	16	1
+43	2021-11-02 11:31:00.745837-03	6	Professor Raimundo	1	[{"added": {}}]	10	1
+44	2021-11-02 11:31:15.915929-03	1	Hotmart	1	[{"added": {}}]	13	1
+45	2021-11-02 12:30:02.08413-03	3	https://facebook.com/fandrefh	1	[{"added": {}}]	14	1
+46	2021-11-02 12:30:21.146233-03	4	https://youtube.com/u/DjangoPro	1	[{"added": {}}]	14	1
+47	2021-11-02 12:30:41.887926-03	5	https://linkedin.com/in/fandrefh	1	[{"added": {}}]	14	1
+48	2021-11-02 12:30:59.729535-03	6	https://twitter.com/franciscooandre	1	[{"added": {}}]	14	1
+49	2021-11-02 18:23:19.522067-03	1	CURSOS ONLINE para você ser APROVADO	1	[{"added": {}}]	17	1
+50	2021-11-02 18:27:10.896801-03	1	CURSOS ONLINE para você ser APROVADO	2	[{"changed": {"fields": ["Imagem"]}}]	17	1
+51	2021-11-02 18:28:12.534285-03	2	Sonha com aquela vaga que paga um ótimo salário?	1	[{"added": {}}]	17	1
+52	2021-11-02 18:54:00.770588-03	2	Sonha com aquela vaga que paga um ótimo salário?	2	[{"changed": {"fields": ["Texto"]}}]	17	1
+53	2021-11-02 18:57:10.282235-03	2	Sonha com aquela vaga que paga um ótimo salário?	2	[{"changed": {"fields": ["Bloco"]}}]	17	1
+54	2021-11-02 19:02:41.253568-03	3	Saia na frente	1	[{"added": {}}]	17	1
+55	2021-11-02 19:03:16.390454-03	4	Cursos com o menor custo	1	[{"added": {}}]	17	1
+56	2021-11-02 19:04:00.074999-03	5	Seja aprovado	1	[{"added": {}}]	17	1
 \.
 
 
@@ -1082,6 +1199,8 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 13	courses	platform
 14	pages	socialnetwork
 15	accounts	profile
+16	courses	category
+17	pages	banner
 \.
 
 
@@ -1132,6 +1251,19 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 40	pages	0007_socialnetwork	2021-09-09 11:01:30.108448-03
 41	blog	0006_alter_post_content	2021-09-09 15:40:25.053392-03
 42	accounts	0001_initial	2021-09-09 16:42:13.138742-03
+43	courses	0011_alter_teacher_bio	2021-11-01 17:29:57.231994-03
+44	courses	0012_alter_teacher_background	2021-11-01 17:30:38.874723-03
+45	courses	0013_alter_teacher_bio	2021-11-01 17:31:06.16446-03
+46	courses	0014_remove_course_requirements	2021-11-02 10:16:16.440616-03
+47	courses	0015_remove_course_for_what	2021-11-02 10:17:05.062876-03
+48	courses	0016_remove_course_what_learn	2021-11-02 10:19:50.241535-03
+49	courses	0017_category	2021-11-02 10:24:57.740004-03
+50	courses	0018_course_category	2021-11-02 10:35:34.303948-03
+51	courses	0019_alter_course_platform	2021-11-02 13:57:46.707507-03
+52	pages	0008_banner	2021-11-02 13:57:46.724124-03
+53	pages	0009_alter_banner_image	2021-11-02 18:26:57.551728-03
+54	pages	0010_alter_banner_text	2021-11-02 18:53:25.854468-03
+55	pages	0011_alter_banner_block	2021-11-02 18:56:24.730665-03
 \.
 
 
@@ -1145,6 +1277,7 @@ vmhrka2qzvkbgwmz37tmg4fjh5u5vddl	.eJxVjMEOwiAQRP-FsyEsdEE8evcbyC5QqRpISnsy_rtt0o
 ass04t9znw2hnictxxds7jc9clint5wh	.eJxVjMEOwiAQRP-FsyEsdEE8evcbyC5QqRpISnsy_rtt0oNe5jDvzbxFoHUpYe15DlMSFwHi9NsxxWeuO0gPqvcmY6vLPLHcFXnQLm8t5df1cP8OCvWyrQkHdtGbNG6B1isDSQMjDIjOqIyMTnsc81k5k1ATOGSwKgIaQG_F5wu9kzZP:1mDrZ2:ktZIaC0qIe6BLTDmqJjgHqCDIlETBULSkGly9MtacPk	2021-08-25 13:58:48.259299-03
 bd0u1veg5ivdqh6kt6ir50e2fk7gdtky	.eJxVjMEOwiAQRP-FsyEsdEE8evcbyC5QqRpISnsy_rtt0oNe5jDvzbxFoHUpYe15DlMSFwHi9NsxxWeuO0gPqvcmY6vLPLHcFXnQLm8t5df1cP8OCvWyrQkHdtGbNG6B1isDSQMjDIjOqIyMTnsc81k5k1ATOGSwKgIaQG_F5wu9kzZP:1mF18x:Cy8LxOpByMKP1A7CPF6KYGnS1VDpfYvwyN7NfXJXZfY	2021-08-28 18:24:39.523666-03
 7j24shldkbtdtx3u9ir2ws265f47ui87	.eJxVjEEOwiAQRe_C2pACxSku3fcMZBgGqRpISrsy3l1JutDdz38v7yU87lv2e-PVL1FchBKn3y8gPbh0EO9YblVSLdu6BNkVedAm5xr5eT3cv0DGlnuWlXNunICCjmwSW2ZAhQOP3xHNOLkELlkFgHgGDaSHFImNpQSBnXh_APdZOLY:1mOJmN:CTUayQNkCG-li2Zv05vllKRUaB4E394kwfhkh3czglE	2021-09-23 10:07:47.876126-03
+v2brxiqrxtslfwubmu2jg7wch5i9wye3	.eJxVjEEOwiAQRe_C2pACxSku3fcMZBgGqRpISrsy3l1JutDdz38v7yU87lv2e-PVL1FchBKn3y8gPbh0EO9YblVSLdu6BNkVedAm5xr5eT3cv0DGlnuWlXNunICCjmwSW2ZAhQOP3xHNOLkELlkFgHgGDaSHFImNpQSBnXh_APdZOLY:1mhdy8:s5GcrEc1ncFI6Yvw5detEZVQ_Faz5CAf1qu_OLzUJqU	2021-11-15 17:31:48.217649-03
 \.
 
 
@@ -1158,11 +1291,28 @@ COPY public.pages_aboutus (id, title_page, text_page, created_at, updated_at) FR
 
 
 --
+-- Data for Name: pages_banner; Type: TABLE DATA; Schema: public; Owner: martaconcurseirauser
+--
+
+COPY public.pages_banner (id, block, image, title, text) FROM stdin;
+1	1	images/banners/reading.svg	CURSOS ONLINE para você ser APROVADO	Aprenda tudo o que precisa para passar no concurso que você tanto deseja.
+2	5	images/banners/img_curso.webp	Sonha com aquela vaga que paga um ótimo salário?	<p>Imagine voc&ecirc; trabalhando com o que mais gosta e ainda com um baita sal&aacute;rio e cheio de benef&iacute;cios... Imaginou?</p>\r\n\r\n<p>Agora, para que voc&ecirc; possa conseguir seu objetivo, o primeiro passo &eacute; se preparar e quando o assunto &eacute; prepara&ccedil;&atilde;o, nossa equipe de curadores &eacute; especialista em encontrar os melhores cursos, todos s&atilde;o selecionados ap&oacute;s um extenso processo de verifica&ccedil;&atilde;o que vai desde a grade do curso at&eacute; a qualidade dos professores.</p>\r\n\r\n<p>Em nosso site voc&ecirc; encontrar&aacute; o curso certo para sua prepara&ccedil;&atilde;o, navegue mais pelo nosso site e se tiver d&uacute;vidas, n&atilde;o hesite em entrar em contato.</p>
+3	2	images/banners/clock.svg	Saia na frente	<p>N&atilde;o perca tempo, escolha seu curso e comece hoje mesmo a se preparar!</p>
+4	3	images/banners/cofre.svg	Cursos com o menor custo	<p>A melhor rela&ccedil;&atilde;o custo x benef&iacute;cios, confira!</p>
+5	4	images/banners/selo.svg	Seja aprovado	<p>Estude com os nossos cursos e seja aprovado nos melhores concursos.</p>
+\.
+
+
+--
 -- Data for Name: pages_socialnetwork; Type: TABLE DATA; Schema: public; Owner: martaconcurseirauser
 --
 
 COPY public.pages_socialnetwork (id, network, profile_url) FROM stdin;
 2	1	https://instagram.com/martateste
+3	2	https://facebook.com/fandrefh
+4	3	https://youtube.com/u/DjangoPro
+5	4	https://linkedin.com/in/fandrefh
+6	5	https://twitter.com/franciscooandre
 \.
 
 
@@ -1205,7 +1355,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: martaconcurseirauser
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 60, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 68, true);
 
 
 --
@@ -1244,6 +1394,13 @@ SELECT pg_catalog.setval('public.blog_post_id_seq', 6, true);
 
 
 --
+-- Name: courses_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: martaconcurseirauser
+--
+
+SELECT pg_catalog.setval('public.courses_category_id_seq', 1, true);
+
+
+--
 -- Name: courses_course_id_seq; Type: SEQUENCE SET; Schema: public; Owner: martaconcurseirauser
 --
 
@@ -1254,35 +1411,35 @@ SELECT pg_catalog.setval('public.courses_course_id_seq', 8, true);
 -- Name: courses_platform_id_seq; Type: SEQUENCE SET; Schema: public; Owner: martaconcurseirauser
 --
 
-SELECT pg_catalog.setval('public.courses_platform_id_seq', 1, false);
+SELECT pg_catalog.setval('public.courses_platform_id_seq', 1, true);
 
 
 --
 -- Name: courses_teacher_id_seq; Type: SEQUENCE SET; Schema: public; Owner: martaconcurseirauser
 --
 
-SELECT pg_catalog.setval('public.courses_teacher_id_seq', 5, true);
+SELECT pg_catalog.setval('public.courses_teacher_id_seq', 6, true);
 
 
 --
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: martaconcurseirauser
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 41, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 56, true);
 
 
 --
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: martaconcurseirauser
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 15, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 17, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: martaconcurseirauser
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 42, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 55, true);
 
 
 --
@@ -1293,10 +1450,17 @@ SELECT pg_catalog.setval('public.pages_aboutus_id_seq', 1, true);
 
 
 --
+-- Name: pages_banner_id_seq; Type: SEQUENCE SET; Schema: public; Owner: martaconcurseirauser
+--
+
+SELECT pg_catalog.setval('public.pages_banner_id_seq', 5, true);
+
+
+--
 -- Name: pages_socialnetwork_id_seq; Type: SEQUENCE SET; Schema: public; Owner: martaconcurseirauser
 --
 
-SELECT pg_catalog.setval('public.pages_socialnetwork_id_seq', 2, true);
+SELECT pg_catalog.setval('public.pages_socialnetwork_id_seq', 6, true);
 
 
 --
@@ -1451,6 +1615,22 @@ ALTER TABLE ONLY public.blog_post
 
 
 --
+-- Name: courses_category courses_category_pkey; Type: CONSTRAINT; Schema: public; Owner: martaconcurseirauser
+--
+
+ALTER TABLE ONLY public.courses_category
+    ADD CONSTRAINT courses_category_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: courses_category courses_category_slug_key; Type: CONSTRAINT; Schema: public; Owner: martaconcurseirauser
+--
+
+ALTER TABLE ONLY public.courses_category
+    ADD CONSTRAINT courses_category_slug_key UNIQUE (slug);
+
+
+--
 -- Name: courses_course courses_course_pkey; Type: CONSTRAINT; Schema: public; Owner: martaconcurseirauser
 --
 
@@ -1544,6 +1724,14 @@ ALTER TABLE ONLY public.django_session
 
 ALTER TABLE ONLY public.pages_aboutus
     ADD CONSTRAINT pages_aboutus_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: pages_banner pages_banner_pkey; Type: CONSTRAINT; Schema: public; Owner: martaconcurseirauser
+--
+
+ALTER TABLE ONLY public.pages_banner
+    ADD CONSTRAINT pages_banner_pkey PRIMARY KEY (id);
 
 
 --
@@ -1659,6 +1847,20 @@ CREATE INDEX blog_post_category_id_c326dbf8 ON public.blog_post USING btree (cat
 --
 
 CREATE INDEX blog_post_slug_b95473f2_like ON public.blog_post USING btree (slug varchar_pattern_ops);
+
+
+--
+-- Name: courses_category_slug_33267d74_like; Type: INDEX; Schema: public; Owner: martaconcurseirauser
+--
+
+CREATE INDEX courses_category_slug_33267d74_like ON public.courses_category USING btree (slug varchar_pattern_ops);
+
+
+--
+-- Name: courses_course_category_id_d64b93bf; Type: INDEX; Schema: public; Owner: martaconcurseirauser
+--
+
+CREATE INDEX courses_course_category_id_d64b93bf ON public.courses_course USING btree (category_id);
 
 
 --
@@ -1802,6 +2004,14 @@ ALTER TABLE ONLY public.blog_post
 
 ALTER TABLE ONLY public.blog_post
     ADD CONSTRAINT blog_post_category_id_c326dbf8_fk_blog_category_id FOREIGN KEY (category_id) REFERENCES public.blog_category(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: courses_course courses_course_category_id_d64b93bf_fk_courses_category_id; Type: FK CONSTRAINT; Schema: public; Owner: martaconcurseirauser
+--
+
+ALTER TABLE ONLY public.courses_course
+    ADD CONSTRAINT courses_course_category_id_d64b93bf_fk_courses_category_id FOREIGN KEY (category_id) REFERENCES public.courses_category(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
