@@ -48,7 +48,6 @@ class Video(models.Model):
         return reverse('pages:video_detail', kwargs={'slug': self.slug})
 
 
-
 class SocialNetwork(models.Model):
     SOCIAL_NETWORK_CHOICES = (
         (1, 'Instagram'),
@@ -66,3 +65,23 @@ class SocialNetwork(models.Model):
     
     def __str__(self):
         return self.profile_url
+
+
+class Banner(models.Model):
+    BLOCK_CHOICES = (
+        (1, 'Bloco 1'),
+        (2, 'Bloco 2'),
+        (3, 'Bloco 3'),
+    )
+    block = models.PositiveBigIntegerField('Bloco', choices=BLOCK_CHOICES)
+    image = models.ImageField('Imagem', upload_to='images/banners')
+    title = models.CharField('Título', max_length=100)
+    text = models.TextField('Texto', blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Banner'
+        verbose_name_plural = 'Banners'
+        ordering = ['block']
+
+    def __str__(self):
+        return self.title

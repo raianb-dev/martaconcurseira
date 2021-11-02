@@ -21,11 +21,10 @@ class Platform(models.Model):
         return self.name
 
 
-
 class Teacher(models.Model):
     name = models.CharField('Nome', max_length=100)
-    background = models.CharField('Formação', max_length=150)
-    bio = RichTextField('Biográfia')
+    background = models.CharField('Formação', max_length=150, blank=True, null=True)
+    bio = RichTextField('Biografia', blank=True, null=True)
     photo = models.ImageField('Foto', upload_to='photos', blank=True, null=True)
     created_at = models.DateTimeField('Criado em', auto_now_add=True)
     updated_at = models.DateTimeField('Atualizado em', auto_now=True)
@@ -39,21 +38,19 @@ class Teacher(models.Model):
 
 
 class Course(models.Model):
+    category = models.ForeignKey('Category', verbose_name='Categoria', null=True, on_delete=models.SET_NULL)
     name = models.CharField('Nome', max_length=100, help_text='Tente criar um título de 60 caracteres no máximo.')
     short_description = models.CharField('Descrição curta', max_length=160, help_text='Tente criar uma descrição de até 160 caracteres.')
+    course_id = models.CharField('Código do Curso', max_length=50, blank=True, null=True)
     author = models.CharField('Criado por', max_length=150)
+    teacher = models.ForeignKey(Teacher, verbose_name='Professor', on_delete=models.CASCADE)
     price = models.DecimalField('Preço', max_digits=19, decimal_places=2,
                                 help_text='Informe o valor sem o símbolo da moeda.')
-    what_learn = RichTextField('O que você vai aprender')
-    requirements = RichTextField('Requisitos')
-    description = RichTextField('Descrição')
-    for_what = RichTextField('Pra quem é este curso')
-    image = models.ImageField('Imagem do curso', upload_to='images')
-    teacher = models.ForeignKey(Teacher, verbose_name='Professor', on_delete=models.CASCADE)
     url = models.URLField('Link de Compra')
+    platform = models.ForeignKey(Platform, verbose_name='Plataforma', blank=True, null=True, on_delete=models.SET_NULL, default=1)
+    description = RichTextField('Descrição')
+    image = models.ImageField('Imagem do curso', upload_to='images')
     is_active = models.BooleanField('Curso Ativo?', default=True, help_text='Somente cursos ativos serão visíveis.')
-    platform = models.ForeignKey(Platform, verbose_name='Plataforma', blank=True, null=True, on_delete=models.SET_NULL)
-    course_id = models.CharField('Código do Curso', max_length=50, blank=True, null=True)
     slug = AutoSlugField('URL Única', populate_from='name', unique=True, help_text='Preenchimento automático')
     created_at = models.DateTimeField('Criado em', auto_now_add=True)
     updated_at = models.DateTimeField('Atualizado em', auto_now=True)
@@ -69,3 +66,16 @@ class Course(models.Model):
     def get_absolute_url(self):
         from django.urls import reverse
         return reverse('courses:course_detail', kwargs={'slug': self.slug})
+
+
+class Category(models.Model):
+    name = models.CharField('Nome', max_length=100)
+    slug = AutoSlugField('URL única', populate_from='name', unique=True, help_text='Preenchimento automático')
+
+    class Meta:
+        verbose_name = 'Categoria'
+        verbose_name_plural = 'Categorias'
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name

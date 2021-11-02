@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import AboutUs, Video, SocialNetwork
+from .models import AboutUs, Video, SocialNetwork, Banner
 
 # Register your models here.
 
@@ -21,3 +21,8 @@ class VideoAdmin(admin.ModelAdmin):
 class SocialNetworkAdmin(admin.ModelAdmin):
     list_display = ['network', 'profile_url']
     search_fields = ['network', 'profile_url']
+
+
+@admin.register(Banner)
+class BannerAdmin(admin.ModelAdmin):
+    list_display = ['block', 'title']

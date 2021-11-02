@@ -110,20 +110,20 @@
                     {% if social %}
                     {% for s in social %}
                         {% if s.network == 1 %}
-                        <li><a href="#" class="p-3 text-decoration-none d-block"> <img
+                        <li><a href="{{ s.profile_url }}" class="p-3 text-decoration-none d-block" target="_blank"> <img
                                 src="{% static 'images/instagram.svg' %}" alt=""></a></li>
                         {% elif s.network == 2 %}
-                        <li><a href="#" class="p-3 text-decoration-none d-block"> <img
+                        <li><a href="{{ s.profile_url }}" class="p-3 text-decoration-none d-block" target="_blank"> <img
                                 src="{% static 'images/facebook.svg' %}" alt=""></a></li>
                         {% elif s.network == 3 %}
-                        <li><a href="#" class="p-3 text-decoration-none d-block"> <img
+                        <li><a href="{{ s.profile_url }}" class="p-3 text-decoration-none d-block" target="_blank"> <img
                                 src="{% static 'images/youtube.svg' %}" alt=""></a></li>
                         {% elif s.network == 4 %}
-                        <li><a href="#" class="p-3 text-decoration-none d-block"> <img
+                        <li><a href="{{ s.profile_url }}" class="p-3 text-decoration-none d-block" target="_blank"> <img
                                 src="{% static 'images/linkedin.svg' %}" alt=""></a></li>
                         {% elif s.network == 5 %}
-                        <li><a href="#" class="p-3 text-decoration-none d-block"> <img
-                                src="{% static 'images/linkedin.svg' %}" alt=""></a></li>
+                        <li><a href="{{ s.profile_url }}" class="p-3 text-decoration-none d-block" target="_blank"> <img
+                                src="{% static 'images/twitter.svg' %}" alt=""></a></li>
                         {% endif %}
                     {% endfor %}
                 {% endif %}
