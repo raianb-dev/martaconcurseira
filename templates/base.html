@@ -39,10 +39,10 @@
     <div class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand d-none d-sm-block me-4 order-lg-1" href="/">
-                <img src="{% static 'images/LOGO-MARTA-CONCURSEIRA-2.png' %}" width="150" alt="Logo Marta Concurseira">
+                <img src="{% static 'images/LOGO-MARTA-CONCURSEIRA-2.png' %}" width="150" alt="Logo Marta Concurseira" class="logo">
             </a>
             <a class="navbar-brand d-sm-none me-2 order-lg-1" href="/">
-                <img src="{% static 'images/LOGO-MARTA-CONCURSEIRA-2.png' %}" width="74" alt="Logo Marta Concurseira">
+                <img src="{% static 'images/LOGO-MARTA-CONCURSEIRA-2.png' %}" width="122" alt="Logo Marta Concurseira">
             </a>
             <div class="navbar-toolbar d-flex align-items-center order-lg-3">
                 <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
@@ -71,12 +71,17 @@
                         <a class="nav-link " href="{% url 'pages:contact' %}">Contato</a>
                     </li>   
                 </ul>
-                <form action="" class="row ">
-                    <div id="search-bar" class="col ps-lg-5">
-                        <input type="text" placeholder="Procuro por..." class="form-control">
-                        <ul class="autocomplete-result-list result-list"></ul>
-                    </div>
-                </form>
+{#                <form action="" class="row ">#}
+{#                    <div id="search-bar" class="col ps-lg-5">#}
+{#                        <input type="text" placeholder="Procuro por..." class="form-control">#}
+{#                        <ul class="autocomplete-result-list result-list"></ul>#}
+{#                    </div>#}
+{#                </form>#}
+
+                <div class="ms-auto">
+                    <a class="btn btn-light btn-shadow me-3 text-danger" href="#" rel="noopener">Entrar</a>
+                    <a class="btn btn-primary btn-shadow" href="#" rel="noopener">Cadastrar</a>
+                </div>
             </div>
         </div>
     </div>
@@ -105,24 +110,24 @@
                 </ul>
             </div>
 
-            <div class="col-lg-5 col-sm-12">
-                <ul class="nav justify-content-lg-end">
+            <div class="col-lg-4 col-sm-12">
+                <ul class="nav justify-content-lg-end align-items-center social_footer">
                     {% if social %}
                     {% for s in social %}
                         {% if s.network == 1 %}
-                        <li><a href="{{ s.profile_url }}" class="p-3 text-decoration-none d-block" target="_blank"> <img
+                        <li><a href="{{ s.profile_url }}" class="p-2 text-decoration-none d-block" target="_blank"> <img
                                 src="{% static 'images/instagram.svg' %}" alt=""></a></li>
                         {% elif s.network == 2 %}
-                        <li><a href="{{ s.profile_url }}" class="p-3 text-decoration-none d-block" target="_blank"> <img
+                        <li><a href="{{ s.profile_url }}" class="p-2 text-decoration-none d-block" target="_blank"> <img
                                 src="{% static 'images/facebook.svg' %}" alt=""></a></li>
                         {% elif s.network == 3 %}
-                        <li><a href="{{ s.profile_url }}" class="p-3 text-decoration-none d-block" target="_blank"> <img
+                        <li><a href="{{ s.profile_url }}" class="p-2 text-decoration-none d-block" target="_blank"> <img
                                 src="{% static 'images/youtube.svg' %}" alt=""></a></li>
                         {% elif s.network == 4 %}
-                        <li><a href="{{ s.profile_url }}" class="p-3 text-decoration-none d-block" target="_blank"> <img
+                        <li><a href="{{ s.profile_url }}" class="p-2 text-decoration-none d-block" target="_blank"> <img
                                 src="{% static 'images/linkedin.svg' %}" alt=""></a></li>
                         {% elif s.network == 5 %}
-                        <li><a href="{{ s.profile_url }}" class="p-3 text-decoration-none d-block" target="_blank"> <img
+                        <li><a href="{{ s.profile_url }}" class="p-2 text-decoration-none d-block" target="_blank"> <img
                                 src="{% static 'images/twitter.svg' %}" alt=""></a></li>
                         {% endif %}
                     {% endfor %}
