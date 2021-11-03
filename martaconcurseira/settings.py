@@ -56,6 +56,7 @@ PROJECT_APPS = [
     'courses.apps.CoursesConfig',
     'blog.apps.BlogConfig',
     'accounts.apps.AccountsConfig',
+    'configs.apps.ConfigsConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + PROJECT_APPS
@@ -84,6 +85,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'pages.custom_context_processors.get_social_network',
+                'pages.custom_context_processors.get_logo',
             ],
         },
     },
