@@ -39,10 +39,10 @@
     <div class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand d-none d-sm-block me-4 order-lg-1" href="/">
-                <img src="{% static 'images/LOGO-MARTA-CONCURSEIRA-2.png' %}" width="150" alt="Logo Marta Concurseira" class="logo">
+                <img src="{{ logo.image.url }}" width="150" alt="{{ logo.title }}" title="{{ logo.title }}" class="logo">
             </a>
             <a class="navbar-brand d-sm-none me-2 order-lg-1" href="/">
-                <img src="{% static 'images/LOGO-MARTA-CONCURSEIRA-2.png' %}" width="122" alt="Logo Marta Concurseira">
+                <img src="{{ logo.image.url }}" width="122" alt="{{ logo.title }}" title="{{ logo.title }}">
             </a>
             <div class="navbar-toolbar d-flex align-items-center order-lg-3">
                 <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
