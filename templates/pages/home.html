@@ -12,7 +12,7 @@
         <div class="container">
             {% if block1_banner %}
                 <div class="row  align-items-center">
-                    <div class="col-lg-5 col-sm-12">
+                    <div class="col-lg-5 col-sm-12 banner_img_topo">
                         <img src="{{ block1_banner.image.url }}" alt="{{ block1_banner.title }}" title="{{ block1_banner.title }}" width="445" height="388">
                     </div>
                     <div class="col-lg-7 col-sm-12 text-center">
@@ -241,7 +241,7 @@
     </div>
 
     {% if block5_banner %}
-        <section class="bg-white pt-lg-5 pt-sm-3 mb-lg-5 mb-sm-3">
+        <section class="bg-white pt-lg-5 pt-sm-3 mb-lg-5 mb-sm-3 marginOn">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-12">
@@ -253,7 +253,7 @@
                         <img src="{{ block5_banner.image.url }}" alt="{{ block5_banner.title }}" title="{{ block5_banner.title }}" class="img-fluid">
                     </div>
 
-                    <div class="col-lg-6 col-sm-12">
+                    <div class="col-lg-6 col-sm-12 marginOn">
                         {{ block5_banner.text|safe }}
 
                         <a href="{% url 'courses:home' %}" class="btn btn-danger btn-lg rounded">Conheça nossos cursos</a>
@@ -274,7 +274,7 @@
                 </div>
 
                 {% for post in posts %}
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-lg-3 col-sm-6 marginOn">
                         <div class="card shadow-sm border-0">
                             <a href="{{ post.get_absolute_url }}" class="card-img-top">
                                 <img src="{{ post.image.url }}" alt="{{ post.title }}" title="{{ post.title }}"
