@@ -161,7 +161,7 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', '{{ ga_code }}');
+  gtag('config', '{{ ga_code.ga_id }}');
 </script>
 {% for footer_script in footer_scripts %}
     {{ footer_script.script|safe }}

@@ -16,7 +16,7 @@ def get_logo(request):
 
 def get_ga_code(request):
     return {
-        'ga_code': GoogleAnalytics.objects.first().ga_id
+        'ga_code': GoogleAnalytics.objects.first()
     }
 
 
