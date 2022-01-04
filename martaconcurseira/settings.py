@@ -86,6 +86,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'pages.custom_context_processors.get_social_network',
                 'pages.custom_context_processors.get_logo',
+                'pages.custom_context_processors.get_ga_code',
+                'pages.custom_context_processors.get_scripts',
             ],
         },
     },

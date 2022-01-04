@@ -6,7 +6,6 @@ from django.utils.encoding import force_text
 class MediaMixin(object):
     class Media:
         css = {'screen': ('/static/admin/css/charsleft.css',), }
-        js = ('/static/admin/js/jquery.js', '/static/admin/js/charsleft.js',)
 
 
 class CharsLeftInput(forms.TextInput, MediaMixin):

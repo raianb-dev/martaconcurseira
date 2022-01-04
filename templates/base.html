@@ -13,9 +13,10 @@
     <meta name="msapplication-navbutton-color" content="#9b75fb">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
-    <meta name="description" content="Marta Concurseira- Preparatório online para concursos, preparatório para concursos, site para encontrar cursos preparatórios online para concursos, confira." />
-    <meta name="keywords" content="aprovação em concursos,curso preparatório para concursos,cursos de português para concursos,cursos de redação,cursos online para concursos,cursos preparatórios para concursos,informática para concursos,marta concurseira,matemática para concursos,preparatório online para concursos,preparatório para concursos"/>
+    {% block meta_description_keyword %}
+        <meta name="description" content="{{ seo.meta_description }}" />
+        <meta name="keywords" content="{{ seo.meta_keywords }}"/>
+    {% endblock %}
     <META NAME="ROBOTS" content="index, follow" />
     <META NAME="Googlebot" CONTENT="index, follow" />
     <link rel="alternate" type="application/xml" title="aprovação em concursos" href="https://martaconcurseira.com/sitemap.xml" />
@@ -32,6 +33,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800&display=swap"
           rel="stylesheet">
     <script data-ad-client="ca-pub-8162488622576384" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    {% for header_script in header_scripts %}
+        {{ header_script.script|safe }}
+    {% endfor %}
+
 </head>
 
 <body>
@@ -156,7 +161,11 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-ZKDYWDF34R');
+  gtag('config', '{{ ga_code }}');
 </script>
+{% for footer_script in footer_scripts %}
+    {{ footer_script.script|safe }}
+{% endfor %}
+
 </body>
 </html>

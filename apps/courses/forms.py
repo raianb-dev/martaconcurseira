@@ -19,5 +19,6 @@ class CourseForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'course_id': forms.TextInput(attrs={'size': 20}),
+            'author': forms.TextInput(attrs={'size': 50, 'class': 'vTextField-resize'}),
             'name': CharsLeftInput()
         }

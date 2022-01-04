@@ -4,6 +4,11 @@
     {{ course.name }} | {{ block.super }}
 {% endblock %}
 
+{% block meta_description_keyword %}
+    <meta name="description" content="{{ course.short_description }}" />
+    <meta name="keywords" content="{{ course.keywords }}"/>
+{% endblock %}
+
 {% block main %}
 
     <section class=" py-5 position-relative">

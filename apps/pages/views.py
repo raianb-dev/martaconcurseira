@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 
 from blog.models import Post
+from configs.models import SEOHome
 from courses.models import Course
 from pages.models import AboutUs, Video, Banner
 
@@ -16,6 +17,7 @@ from .forms import ContactForm
 
 def home(request):
     template_name = 'pages/home.html'
+    seo = SEOHome.objects.first()
     posts = Post.objects.filter(is_active=True,
                                 published_at__lte=datetime.datetime.today()).order_by('-published_at')[:4]
     courses = Course.objects.order_by('-created_at')[:8]
@@ -25,6 +27,7 @@ def home(request):
     block4_banner = Banner.objects.filter(block=4).first()
     block5_banner = Banner.objects.filter(block=5).first()
     context = {
+        'seo': seo,
         'posts': posts,
         'courses': courses,
         'block1_banner': block1_banner,
