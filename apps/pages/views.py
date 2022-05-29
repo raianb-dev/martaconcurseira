@@ -7,7 +7,7 @@ from django.contrib import messages
 
 from blog.models import Post
 from configs.models import SEOHome
-from courses.models import Course
+from courses.models import Course, Category
 from pages.models import AboutUs, Video, Banner
 
 from .forms import ContactForm
@@ -21,6 +21,7 @@ def home(request):
     posts = Post.objects.filter(is_active=True,
                                 published_at__lte=datetime.datetime.today()).order_by('-published_at')[:4]
     courses = Course.objects.order_by('-created_at')[:8]
+    categories = Category.objects.all()
     block1_banner = Banner.objects.filter(block=1).first()
     block2_banner = Banner.objects.filter(block=2).first()
     block3_banner = Banner.objects.filter(block=3).first()
@@ -30,6 +31,7 @@ def home(request):
         'seo': seo,
         'posts': posts,
         'courses': courses,
+        'categories': categories,
         'block1_banner': block1_banner,
         'block2_banner': block2_banner,
         'block3_banner': block3_banner,
@@ -108,4 +110,29 @@ def search_result(request):
     if course_name:
         course = Course.objects.filter(name=course_name).first()
         context['course'] = course
+    return render(request, template_name, context)
+
+
+def search_filters(request):
+    template_name = 'courses/search_filters.html'
+    category_id = request.GET.get('category', None)
+    search = request.GET.get('search', None)
+    price_range = request.GET.get('price_range', None)
+    if category_id is not None:
+        courses_cat = Course.objects.filter(id=category_id)
+    if search is not None:
+        courses_term = Course.objects.search(query=search)
+    if price_range is not None and price_range == 'out_range':
+        courses_price_range = Course.objects.filter(price__lte=10000)
+    else:
+        courses_price_range = Course.objects.filter(price__lte=price_range)
+    paginator = Paginator(courses_price_range, 10)
+    page = request.GET.get('pagina')
+    courses_price_range = paginator.get_page(page)
+    context = {
+        'courses_cat': courses_cat if category_id else None,
+        'courses_term': courses_term if search else None,
+        'courses_price_range': courses_price_range if price_range else None,
+        'price_range': price_range,
+    }
     return render(request, template_name, context)

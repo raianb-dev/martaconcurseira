@@ -4,7 +4,7 @@ from autoslug import AutoSlugField
 from ckeditor.fields import RichTextField
 
 # Create your models here.
-
+from courses.managers import CourseManager
 
 
 class Platform(models.Model):
@@ -55,6 +55,8 @@ class Course(models.Model):
     slug = AutoSlugField('URL Única', populate_from='name', unique=True, help_text='Preenchimento automático')
     created_at = models.DateTimeField('Criado em', auto_now_add=True)
     updated_at = models.DateTimeField('Atualizado em', auto_now=True)
+
+    objects = CourseManager()
 
     class Meta:
         verbose_name = 'Curso'
