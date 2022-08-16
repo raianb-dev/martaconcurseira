@@ -130,7 +130,7 @@ def search_filters(request):
     page = request.GET.get('pagina')
     courses_price_range = paginator.get_page(page)
     context = {
-        'courses_cat': courses_cat if courses_cat else None,
+        'courses_cat': courses_cat,
         'courses_term': courses_term if search else None,
         'courses_price_range': courses_price_range if price_range else None,
         'price_range': price_range,
