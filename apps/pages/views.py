@@ -136,6 +136,6 @@ def search_filters(request):
         'price_range': price_range,
         'category': category_id,
         'search': search,
-        'price_range': price_range if price_range else 'out_range',
+        'price_range_page': price_range if price_range else 'out_range',
     }
     return render(request, template_name, context)
