@@ -119,7 +119,7 @@ def search_filters(request):
     search = request.GET.get('search', '')
     price_range = request.GET.get('price_range', 10000)
     if category_id is not None:
-        courses_cat = Course.objects.filter(id=category_id)
+        courses_cat = Course.objects.filter(category_id=category_id)
     else:
         courses_cat = None
     if search != '':
