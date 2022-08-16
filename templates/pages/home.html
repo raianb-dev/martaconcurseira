@@ -75,20 +75,19 @@
     <!--        </div>-->
 
     <section class="card-wrap">
-        {% comment %} <div class="container mb-3">
+        <div class="container mb-3">
             <div class="row">
                 <div class="col-12">
-                    <form action="" class="row align-items-center">
+                    <form action="{% url 'pages:search_filters' %}" class="row align-items-center">
                         <div class="col-lg-10">
                             <div class="input-group input-group-filter">
-                                <select class="form-select" id="inputGroupSelect02">
-                                    <option selected>Todas as Categorias</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                <select class="form-select" id="inputGroupSelect02" name="category">
+                                    {% for category in categories %}
+                                        <option value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endfor %}
                                 </select>
-                                <input type="text" aria-label="Last name" class="form-control">
-                                <button class="btn btn-outline-secondary" type="button">
+                                <input type="text" aria-label="Last name" class="form-control" name="search">
+                                <button class="btn btn-outline-secondary" type="submit">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
@@ -107,7 +106,7 @@
                             <div class="collapse mt-3" id="collapseExample">
                                 <div class="card card-body">
                                     <div class="alert alert-light mb-0">
-                                        <span>Ainda não tem certeza? Todos os cursos contam com uma garantia de devolução do dinheiro em 30 dias</span>
+                                        <span>Precisa de mais filtro?</span>
                                     </div>
 
                                     <div class="d-flex flex-fill">
@@ -115,62 +114,25 @@
                                             <strong class="d-block mb-1">Preços</strong>
                                             <div class="list-group">
                                                 <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="">
-                                                    Até R$250
+                                                    <input class="form-check-input me-1" type="radio" name="price_range" value="250">
+                                                    Até R$ 250,00
                                                 </label>
                                                 <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="">
-                                                    R$250 a R$500
+                                                    <input class="form-check-input me-1" type="radio" name="price_range" value="500">
+                                                    Até R$ 500,00
                                                 </label>
                                                 <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="">
-                                                    Third checkbox
+                                                    <input class="form-check-input me-1" type="radio" name="price_range" value="1000">
+                                                    Até R$ 1.000,00
                                                 </label>
                                                 <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="">
-                                                    Fourth checkbox
+                                                    <input class="form-check-input me-1" type="radio" name="price_range" value="2000">
+                                                    Até R$ 2.000,00
                                                 </label>
                                                 <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="">
-                                                    Fifth checkbox
+                                                    <input class="form-check-input me-1" type="radio" name="price_range" value="out_range">
+                                                    Acima de R$ 2.000,00
                                                 </label>
-                                            </div>
-                                        </div>
-
-                                        <div class="p-2">
-                                            <strong class="d-block mb-1">Duração</strong>
-                                            <div class="list-group">
-                                                <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="">
-                                                    Menos de 4 minutos
-                                                </label>
-                                                <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="">
-                                                    4 a 20 minutos
-                                                </label>
-                                                <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="">
-                                                    Third checkbox
-                                                </label>
-                                                <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="">
-                                                    Fourth checkbox
-                                                </label>
-                                                <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="">
-                                                    Fifth checkbox
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <div class="p-2">
-                                            <strong class="d-block mb-1">ORDENAR POR</strong>
-                                            <div class="list-group">
-                                                <a href="#" class="list-group-item list-group-item-action">Relevância</a>
-                                                <a href="#" class="list-group-item list-group-item-action">Contagem de visualizações</a>
-                                                <a href="#" class="list-group-item list-group-item-action">Classificação</a>
-                                                <a href="#" class="list-group-item list-group-item-action">Classificação</a>
-                                                <a href="#" class="list-group-item list-group-item-action">Classificação</a>
                                             </div>
                                         </div>
                                     </div>
@@ -181,7 +143,7 @@
                     </form>
                 </div>
             </div>
-        </div> {% endcomment %}
+        </div>
 
         <div class="container">
             <div class="row mb-3">
