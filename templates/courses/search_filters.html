@@ -143,7 +143,7 @@
 
                                         {% for p in courses_price_range.paginator.page_range %}
                                             <li class="page-item"><a class="page-link"
-                                                                     href="?pagina={{ p }}">{{ p }}</a></li>
+                                                                     href="?category={{ category }}&search={{ search }}&price_range={{ price_range }}&pagina={{ p }}">{{ p }}</a></li>
                                         {% endfor %}
                                         {% if courses_price_range.has_next %}
                                             <li class="page-item">
