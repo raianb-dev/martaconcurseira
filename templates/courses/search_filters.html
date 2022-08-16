@@ -136,7 +136,7 @@
                                     <ul class="pagination justify-content-center">
                                         {% if courses_price_range.number != 1 %}
                                             <li class="page-item">
-                                                <a class="page-link" href="?pagina={{ courses_price_range.previous_page_number }}"
+                                                <a class="page-link" href="?category={{ category }}&search={{ search }}&price_range={{ price_range }}&pagina={{ courses_price_range.previous_page_number }}"
                                                    tabindex="-1" aria-disabled="true">Anterior</a>
                                             </li>
                                         {% endif %}
@@ -147,7 +147,7 @@
                                         {% endfor %}
                                         {% if courses_price_range.has_next %}
                                             <li class="page-item">
-                                                <a class="page-link" href="?price_range=out_range&pagina={{ courses_price_range.next_page_number }}">Próximo</a>
+                                                <a class="page-link" href="?category={{ category }}&search={{ search }}&price_range={{ price_range }}&pagina={{ courses_price_range.next_page_number }}">Próximo</a>
                                             </li>
                                         {% endif %}
 

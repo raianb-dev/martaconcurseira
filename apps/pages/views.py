@@ -116,13 +116,13 @@ def search_result(request):
 def search_filters(request):
     template_name = 'courses/search_filters.html'
     category_id = request.GET.get('category', None)
-    search = request.GET.get('search', None)
+    search = request.GET.get('search', '')
     price_range = request.GET.get('price_range', None)
     if category_id is not None:
         courses_cat = Course.objects.filter(id=category_id)
-    if search is not None:
+    if search != '':
         courses_term = Course.objects.search(query=search)
-    if price_range is not None and price_range == 'out_range':
+    if price_range is None or price_range == 'out_range':
         courses_price_range = Course.objects.filter(price__lte=10000)
     else:
         courses_price_range = Course.objects.filter(price__lte=price_range)
@@ -134,5 +134,8 @@ def search_filters(request):
         'courses_term': courses_term if search else None,
         'courses_price_range': courses_price_range if price_range else None,
         'price_range': price_range,
+        'category': category_id,
+        'search': search,
+        'price_range': price_range if price_range else 'out_range',
     }
     return render(request, template_name, context)
