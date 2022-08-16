@@ -136,18 +136,18 @@
                                     <ul class="pagination justify-content-center">
                                         {% if courses_price_range.number != 1 %}
                                             <li class="page-item">
-                                                <a class="page-link" href="?category={{ category }}&search={{ search }}&price_range={{ price_range_page }}&pagina={{ courses_price_range.previous_page_number }}"
+                                                <a class="page-link" href="?category={{ category }}&search={{ search }}&price_range={{ price_range }}&pagina={{ courses_price_range.previous_page_number }}"
                                                    tabindex="-1" aria-disabled="true">Anterior</a>
                                             </li>
                                         {% endif %}
 
                                         {% for p in courses_price_range.paginator.page_range %}
                                             <li class="page-item"><a class="page-link"
-                                                                     href="?category={{ category }}&search={{ search }}&price_range={{ price_range_page }}&pagina={{ p }}">{{ p }}</a></li>
+                                                                     href="?category={{ category }}&search={{ search }}&price_range={{ price_range }}&pagina={{ p }}">{{ p }}</a></li>
                                         {% endfor %}
                                         {% if courses_price_range.has_next %}
                                             <li class="page-item">
-                                                <a class="page-link" href="?category={{ category }}&search={{ search }}&price_range={{ price_range_page }}&pagina={{ courses_price_range.next_page_number }}">Próximo</a>
+                                                <a class="page-link" href="?category={{ category }}&search={{ search }}&price_range={{ price_range }}&pagina={{ courses_price_range.next_page_number }}">Próximo</a>
                                             </li>
                                         {% endif %}
 
