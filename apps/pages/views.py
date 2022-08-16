@@ -120,6 +120,8 @@ def search_filters(request):
     price_range = request.GET.get('price_range', 10000)
     if category_id is not None:
         courses_cat = Course.objects.filter(id=category_id)
+    else:
+        courses_cat = None
     if search != '':
         courses_term = Course.objects.search(query=search)
     if price_range:
@@ -128,7 +130,7 @@ def search_filters(request):
     page = request.GET.get('pagina')
     courses_price_range = paginator.get_page(page)
     context = {
-        'courses_cat': courses_cat if category_id else None,
+        'courses_cat': courses_cat if courses_cat else None,
         'courses_term': courses_term if search else None,
         'courses_price_range': courses_price_range if price_range else None,
         'price_range': price_range,
