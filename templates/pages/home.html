@@ -104,7 +104,7 @@
                 </div>
             </div>
             <div class="row">
-                {% for course in courses %}
+                {% for course in page_obj %}
                 <div class="col-lg-3 col-sm-6 mt-3">
                     <div class="card shadow-sm border-0">
                         <a href="{{ course.get_absolute_url }}" class="card-img-top">
@@ -133,6 +133,43 @@
                 {% endfor %}
             </div>
 
+             <!-- Paginator -->
+            <div class="d-flex justify-content-center align-items-center py-4">
+                {% if page_obj.has_other_pages %}
+                <div class="btn-group" role="group" aria-label="Item pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">&laquo;</a>
+                    {% endif %}
+
+                    {% if page_obj.number|add:'-4' > 1 %}
+                    <a href="?page={{ page_obj.number|add:'-5' }}" class="btn btn-outline-primary">&hellip;</a> 
+                    {% endif %}
+
+                    {% for page_number in page_obj.paginator.page_range %}
+                        {% if page_obj.number == page_number %}
+                            <button class="btn btn-outline-primary active">
+                                <span>{{ page_number }} <span class="sr-only">(Atual)</span></span>
+                            </button>
+
+                        {% elif page_number > page_obj.number|add:'-5' and page_number < page_obj.number|add:'5' %}
+                            <a href="?page={{ page_number }}" class="btn btn-outline-primary">
+                                {{ page_number }}
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+                    <a href="?page={{ page_obj.number|add:'5' }}" class="btn btn-outline-primary">&hellip;</a>  
+                    {% endif %}
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">&raquo;</a>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+            </div>
+            
         </div>
     </section>
 
