@@ -12,61 +12,18 @@
                 <div class="col-12">
                     <div class="py-4 text-center">
                         <h2 class="display-4 fw-bold text-primary">Resultados do Filtro</h2>
-                        <span class="h4 fw-light">Cursos para você se preparar e conseguir a tão sonhada vaga</span>
+                        <span class="h4 fw-light">Resultado da pesquisa para: {{search}}</span>
                     </div>
                 </div>
             </div>
 
             <div class="row justify-content-center">
                 <div class="w-100"></div>
-
-                {% if courses_cat %}
-                    <div class="row justify-content-center">
-                        <div class="col-12">
-                            <div class="py-4 text-center">
-                                <h4 class="fw-bold text-primary">Por categoria</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    {% for course in courses_cat %}
-                        <div class="col-lg-3 col-sm-6">
-                            <div class="card shadow-sm border-0 mb-4">
-                                <a href="{{ course.get_absolute_url }}" class="card-img-top">
-                                    <img src="{{ course.image.url }}" alt="{{ course.title }}"
-                                         title="{{ course.title }}" class="card-img-top rounded-top">
-                                </a>
-                                <div class="card-body">
-                                    <a href="{{ course.get_absolute_url }}" class="text-dark text-decoration-none">
-                                        <strong>
-                                            {{ course.name }}
-                                        </strong>
-                                    </a>
-                                    <span class="d-block mt-2 mb-3 text-secondary">{{ course.short_description|truncatewords:10 }}</span>
-
-                                    <time class="small d-block">Cadastrado há {{ course.created_at|timesince }}</time>
-                                </div>
-                                <div class="card-footer bg-white">
-                                    <div class="d-flex align-items-center justify-content-center py-2">
-                                        <a href="{{ course.get_absolute_url }}" class="btn btn-danger btn-sm">Saiba
-                                            mais</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% endif %}
+ 
                 {% if courses_term %}
-                    <div class="row justify-content-center">
-                        <div class="col-12">
-                            <div class="py-4 text-center">
-                                <h4 class="fw-bold text-primary">Por termo</h4>
-                            </div>
-                        </div>
-                    </div>
-
+                    <div class="row justify-content-center"> 
                     {% for course in courses_term %}
-                        <div class="col-lg-3 col-sm-6">
+                        <div class="col-lg-3 col-sm-6 py-4">
                             <div class="card shadow-sm border-0 mb-4">
                                 <a href="{{ course.get_absolute_url }}" class="card-img-top">
                                     <img src="{{ course.image.url }}" alt="{{ course.title }}"
@@ -80,83 +37,23 @@
                                         </strong>
                                     </a>
                                     <span class="d-block mt-2 mb-3 text-secondary">{{ course.short_description|truncatewords:10 }}</span>
-
-                                    <time class="small d-block">Cadastrado há {{ course.created_at|timesince }}</time>
+ 
                                 </div>
                                 <div class="card-footer bg-white">
-                                    <div class="d-flex align-items-center justify-content-center py-2">
-                                        <a href="{{ course.get_absolute_url }}" class="btn btn-danger btn-sm">Saiba
-                                            mais</a>
-                                    </div>
+
+                                    <div class="d-flex align-items-end justify-content-between py-2">
+                                        <div>
+                                            <strong class="text-primary">R$ {{ course.price }}</strong>
+                                        </div>
+        
+                                        <a href="{{ course.get_absolute_url }}" class="btn btn-danger btn-sm">ver detalhes</a>
+                                    </div> 
                                 </div>
                             </div>
                         </div>
                     {% endfor %}
-                {% endif %}
-                {% if courses_price_range %}
-                    <div class="row justify-content-center">
-                        <div class="col-12">
-                            <div class="py-4 text-center">
-                                <h4 class="fw-bold text-primary">Por faixa de preço</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    {% for course in courses_price_range %}
-                        <div class="col-lg-3 col-sm-6">
-                            <div class="card shadow-sm border-0 mb-4">
-                                <a href="{{ course.get_absolute_url }}" class="card-img-top">
-                                    <img src="{{ course.image.url }}" alt="{{ course.title }}"
-                                         title="{{ course.title }}"
-                                         class="card-img-top rounded-top">
-                                </a>
-                                <div class="card-body">
-                                    <a href="{{ course.get_absolute_url }}" class="text-dark text-decoration-none">
-                                        <strong>
-                                            {{ course.name }}
-                                        </strong>
-                                    </a>
-                                    <span class="d-block mt-2 mb-3 text-secondary">{{ course.short_description|truncatewords:10 }}</span>
-
-                                    <time class="small d-block">Cadastrado há {{ course.created_at|timesince }}</time>
-                                </div>
-                                <div class="card-footer bg-white">
-                                    <div class="d-flex align-items-center justify-content-center py-2">
-                                        <a href="{{ course.get_absolute_url }}" class="btn btn-danger btn-sm">Saiba
-                                            mais</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                    {% if courses_price_range.paginator.num_pages > 1 %}
-                        <div class="row">
-                            <div class="co-12">
-                                <nav aria-label="Page navigation blog">
-                                    <ul class="pagination justify-content-center">
-                                        {% if courses_price_range.number != 1 %}
-                                            <li class="page-item">
-                                                <a class="page-link" href="?category={{ category }}&search={{ search }}&price_range={{ price_range }}&pagina={{ courses_price_range.previous_page_number }}"
-                                                   tabindex="-1" aria-disabled="true">Anterior</a>
-                                            </li>
-                                        {% endif %}
-
-                                        {% for p in courses_price_range.paginator.page_range %}
-                                            <li class="page-item"><a class="page-link"
-                                                                     href="?category={{ category }}&search={{ search }}&price_range={{ price_range }}&pagina={{ p }}">{{ p }}</a></li>
-                                        {% endfor %}
-                                        {% if courses_price_range.has_next %}
-                                            <li class="page-item">
-                                                <a class="page-link" href="?category={{ category }}&search={{ search }}&price_range={{ price_range }}&pagina={{ courses_price_range.next_page_number }}">Próximo</a>
-                                            </li>
-                                        {% endif %}
-
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endif %}
+                {% endif %} 
+                
             </div>
         </div>
     </section>
