@@ -115,26 +115,12 @@ def search_result(request):
 
 def search_filters(request):
     template_name = 'courses/search_filters.html'
-    category_id = request.GET.get('category', None)
     search = request.GET.get('search', '')
-    price_range = request.GET.get('price_range', 10000)
-    if category_id is not None:
-        courses_cat = Course.objects.filter(category_id=category_id)
-    else:
-        courses_cat = None
     if search != '':
         courses_term = Course.objects.search(query=search)
-    if price_range:
-        courses_price_range = Course.objects.filter(price__lte=price_range)
-    paginator = Paginator(courses_price_range, 10)
-    page = request.GET.get('pagina')
-    courses_price_range = paginator.get_page(page)
+    
     context = {
-        'courses_cat': courses_cat,
-        'courses_term': courses_term if search else None,
-        'courses_price_range': courses_price_range if price_range else None,
-        'price_range': price_range,
-        'category': category_id,
+        'courses_term': courses_term if search else None, 
         'search': search,
     }
     return render(request, template_name, context)
