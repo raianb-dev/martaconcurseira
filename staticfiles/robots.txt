@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-
-User-Agent: Googlebot
-Allow: /
-
-Sitemap: https://www.martaconcurseira.com/sitemap.xml

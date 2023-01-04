@@ -33,7 +33,7 @@ Use os comandos abaixo para conectar no PostgreSQL e criar o banco o de dados.
 
 `create role martaconcurseirauser with login createdb password 'password123';`
 
-`create database martaconcurseiradb owner martauser;`
+`create database martaconcurseiradb owner martaconcurseirauser;`
 
 Para sair do interpretador de comandos do PostgreSQL, use o comando abaixo.
 
@@ -72,7 +72,7 @@ PS: Garanta que o ambiente virtual está ativado daqui pra frente, todos os coma
 Copie e cole o conteúdo abaixo dentro de um arquivo **.env** (crie o arquivo, o _*ponto*_ também deve ser informado no nome do arquivo) na raiz do projeto, ou seja, dentro do diretório *martaconcurseira*
 
 ```
-DEUG=True
+DEBUG=True
 SECRET_KEY=52(*645gt&d8-b8_wry5vw0ev%5^^9v_&mxudr%)gx_b8vysge
 ALLOWED_HOSTS=*
 DB_ENGINE=django.db.backends.postgresql
