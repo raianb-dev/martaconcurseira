@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% load split %}
+{% load strip %}
+{% load static %}
+
+{% block title %}
+    {{ post.title }} | {{ block.super }}
+{% endblock title %}
+
+{% block main %}
+
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="py-md-4 my-md-4 py-3 my-3 text-center">
+                        <h2 class="display-4 fw-bold text-primary">Blog</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-7 col-sm-12">
+                    <div class="mb-4">
+                        <h1 class="h2">{{ post.title }}</h1>
+                    </div>
+
+                    <div class="border-top border-bottom py-4 mb-5">
+                        <div class="row align-items-md-center">
+                            <div class="col-md-7 mb-5 mb-md-0">
+                                <div class="d-flex media align-items-center">
+                                    <div class="avatar avatar-circle">
+                                    {% if post.author.profile %}
+                                    <img class="avatar-img" src="{{ post.author.profile.photo.url }}"
+                                             alt="Image Description" width="60" height="60">
+                                    {% else %}
+                                        <img class="avatar-img" src="{% static 'images/user_default.webp' %}"
+                                             alt="Image Description" width="60" height="60">
+                                    {% endif %}
+                                    </div>
+
+                                    <div class="media-body font-size-1 ms-3">
+                                        <span class="h6"><a href="#"
+                                                            class="text-decoration-none">{{ post.author.get_full_name|default:post.author.username }}</a></span>
+                                        <span class="d-block text-muted">{{ post.published_at|timesince }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="d-flex justify-content-md-end align-items-center share">
+                                    <span class="d-block small font-weight-bold text-cap mr-2">Compartilhe:</span>
+
+                                    <a class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ms-2" href="#">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                    <a class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ms-2" href="#">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                    <a class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ms-2" href="#">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                    <a class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ms-2" href="#">
+                                        <i class="fab fa-telegram"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="post">
+                        <p>
+                            {{ post.content|safe }}
+                        </p>
+                    </div>
+
+                    <div class="mt-5 mb-4">
+                        {% with post.tags|split:"," as tags %}
+                            {% for tag in tags %}
+                                <a class="btn btn-xs btn-soft-secondary mb-1"
+                                   href="{% url 'blog:get_posts_by_tag' tag|strip %}">{{ tag }}</a>
+                            {% endfor %}
+                        {% endwith %}
+                    </div>
+                </div> 
+            </div> 
+            <div class="row justify-content-center">
+                <div class="col-9">
+                    <strong class="h4 d-block fw-bold mb-3 text-primary">Artigos recentes</strong>
+                </div>
+                <div class="w-100"></div>
+                {% if recents_posts %}
+                    {% for recents_post in recents_posts %}
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="card shadow-sm border-0 mb-4">
+                                <a href="{{ recents_post.absolute_url }}" class="card-img-top">
+                                    <img src="{{ recents_post.image.url }}" alt="{{ recents_post.title }}"
+                                         class="card-img-top rounded-top">
+                                </a>
+                                <div class="card-body">
+                                    <a href="{{ recents_post.absolute_url }}" class="text-dark text-decoration-none">
+                                        <strong>
+                                            {{ recents_post.title }}
+                                        </strong>
+                                    </a>
+                                    <span class="d-block mt-2 mb-3 text-secondary">{{ recents_post.headline }}</span>
+
+                                    <time class="small d-block">{{ recents_post.published_at|timesince }} atrás</time>
+                                </div>
+                                <div class="card-footer bg-white">
+                                    <div class="d-flex align-items-center justify-content-center py-2">
+                                        <a href="{{ recents_post.absolute_url }}" class="btn btn-danger btn-sm">Leia
+                                            mais</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div> 
+        </div>
+    </section>
+    <div class="banner_full text-center bg-white py-4 my-lg-5 my-sm-3">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8162488622576384"
+        crossorigin="anonymous"></script>
+        <ins class="adsbygoogle"
+            style="display:block; text-align:center;"
+            data-ad-layout="in-article"
+            data-ad-format="fluid"
+            data-ad-client="ca-pub-8162488622576384"
+            data-ad-slot="2950804260"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+{% endblock main %}
