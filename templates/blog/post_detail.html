@@ -41,28 +41,28 @@
                                     </div>
 
                                     <div class="media-body font-size-1 ms-3">
-                                        <span class="h6"><a href="#"
-                                                            class="text-decoration-none">{{ post.author.get_full_name|default:post.author.username }}</a></span>
+                                        <span class="h6"><a href="#"  class="text-decoration-none">{{ post.author.get_full_name|default:post.author.username }}</a></span>
                                         <span class="d-block text-muted">{{ post.published_at|timesince }}</span>
                                     </div>
                                 </div>
-                            </div>
+                            </div> 
                             <div class="col-md-5">
                                 <div class="d-flex justify-content-md-end align-items-center share">
                                     <span class="d-block small font-weight-bold text-cap mr-2">Compartilhe:</span>
 
-                                    <a class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ms-2" href="#">
+                                    <a class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ms-2" href="https://www.facebook.com/sharer.php?u=https://www.martaconcurseira.com/{{post.get_absolute_url}}" target="_blank">
                                         <i class="fab fa-facebook-f"></i>
                                     </a>
-                                    <a class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ms-2" href="#">
+                                    <a class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ms-2" href="https://twitter.com/intent/tweet?text={{post.title}}%0a%0ahttps://www.martaconcurseira.com/{{post.get_absolute_url}}" target="_blank">
                                         <i class="fab fa-twitter"></i>
                                     </a>
-                                    <a class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ms-2" href="#">
-                                        <i class="fab fa-instagram"></i>
+                                    <a class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ms-2" href="whatsapp://send?text={{post.title}}%0a%0ahttps://www.martaconcurseira.com/{{post.get_absolute_url}}">
+                                        <i class="fab fa-whatsapp"></i>
                                     </a>
-                                    <a class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ms-2" href="#">
+                                    <a class="btn btn-xs btn-icon btn-soft-secondary rounded-circle ms-2" href="https://t.me/share/url?url=https://www.martaconcurseira.com/{{post.get_absolute_url}}&{{post.title}}">
                                         <i class="fab fa-telegram"></i>
                                     </a>
+
                                 </div>
                             </div>
                         </div>
