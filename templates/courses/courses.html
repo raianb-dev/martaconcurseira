@@ -32,12 +32,14 @@
                                     {{ course.name }}
                                 </strong>
                             </a>
-                            <span class="d-block mt-2 mb-3 text-secondary">{{ course.short_description|truncatewords:10 }}</span>
+                            <span class="d-block mt-2 mb-3 text-secondary">{{ course.short_description|truncatewords:10 }}</span> 
+                        </div> 
 
-                            <time class="small d-block">Cadastrado há {{ course.created_at|timesince }}</time>
-                        </div>
                        <div class="card-footer bg-white">
-                            <div class="d-flex align-items-center justify-content-center py-2">
+                            <div class="d-flex align-items-end justify-content-between py-2"> 
+                                <div>
+                                    <strong class="text-primary">R$ {{ course.price }}</strong>
+                                </div> 
                                 <a href="{{ course.get_absolute_url }}" class="btn btn-danger btn-sm">Saiba mais</a>
                             </div>
                         </div>
