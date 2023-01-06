@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Resultado do Filtro de Cursos | {{ block.super }}
+    Resultado do Filtro de Cursos | {{ block.super|truncatechars:40 }}
 {% endblock %}
 
 {% block meta_description_keyword %}
-    <meta name="description" content="Filtra todos os cursos referente a pesquisa: {{search}}" />
+    <meta name="description" content="Filtra: {{search}}" />
     <meta name="keywords" content="Resultado da pesquisa para: {{search}}"/>
 {% endblock %}
 

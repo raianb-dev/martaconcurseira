@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Nossos cursos | {{ block.super }}
+    Nossos cursos | {{ block.super|truncatechars:60 }}
 {% endblock %}
 
 {% block meta_description_keyword %}

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Posts Tag {{ tag }} | {{ block.super }}
+    Posts Tag {{ tag }} | {{ block.super|truncatechars:40 }}
 {% endblock title %}
 
 {% block main %}
