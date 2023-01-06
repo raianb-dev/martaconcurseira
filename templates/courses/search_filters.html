@@ -4,6 +4,11 @@
     Resultado do Filtro de Cursos | {{ block.super }}
 {% endblock %}
 
+{% block meta_description_keyword %}
+    <meta name="description" content="Filtra todos os cursos referente a pesquisa: {{search}}" />
+    <meta name="keywords" content="Resultado da pesquisa para: {{search}}"/>
+{% endblock %}
+
 {% block main %}
 
     <section class="py-5">

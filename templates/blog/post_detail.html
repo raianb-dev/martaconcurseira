@@ -8,6 +8,11 @@
     {{ post.title }} | {{ block.super }}
 {% endblock title %}
 
+{% block meta_description_keyword %}
+    <meta name="description" content="{{ post.headline }}" />
+    <meta name="keywords" content="{{ post.tags }}"/>
+{% endblock %}
+
 {% block main %}
 
     <section class="py-5">
