@@ -38,15 +38,14 @@ class Teacher(models.Model):
 
 
 class Course(models.Model):
-    category = models.ForeignKey('Category', verbose_name='Categoria', null=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey('Category', verbose_name='Categoria', null=True, on_delete=models.SET_NULL, blank=True)
     name = models.CharField('Nome', max_length=100, help_text='Tente criar um título de 60 caracteres no máximo.')
     short_description = models.CharField('Descrição curta', max_length=160, help_text='Tente criar uma descrição de até 160 caracteres.')
     keywords = models.CharField('Palavras chaves', max_length=255, help_text='Separadas por virgula', default='')
     course_id = models.CharField('Código do Curso', max_length=50, blank=True, null=True)
-    author = models.CharField('Criado por', max_length=150)
-    teacher = models.ForeignKey(Teacher, verbose_name='Professor', on_delete=models.CASCADE)
-    price = models.DecimalField('Preço', max_digits=19, decimal_places=2,
-                                help_text='Informe o valor sem o símbolo da moeda.')
+    author = models.CharField('Criado por', max_length=150, blank=True, null=True)
+    teacher = models.ForeignKey(Teacher, verbose_name='Professor', on_delete=models.CASCADE, blank=True, null=True)
+    price = models.DecimalField('Preço', max_digits=19, decimal_places=2, help_text='Informe o valor sem o símbolo da moeda.')
     url = models.URLField('Link de Compra')
     platform = models.ForeignKey(Platform, verbose_name='Plataforma', blank=True, null=True, on_delete=models.SET_NULL, default=1)
     description = RichTextField('Descrição')
