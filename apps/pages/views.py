@@ -128,3 +128,7 @@ def search_filters(request):
         'search': search,
     }
     return render(request, template_name, context)
+
+
+def handler404(request, exception):
+    return render(request, 'pages/error/404.html') 
