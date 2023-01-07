@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-{{title_blog}}
+    Últimas Notícias | {{ block.super|truncatechars:60 }}
 {% endblock title %}
 
 {% block meta_description_keyword %}
