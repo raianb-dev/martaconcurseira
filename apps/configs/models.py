@@ -2,8 +2,25 @@ from django.db import models
 from django.core.exceptions import ValidationError
 
 # Create your models here.
+class TitleBar(models.Model):
+    PAGES = (
+        ('01', 'Home'),
+        ('02', 'Cursos'),
+        ('03', 'Blog'),
+        ('04', 'About'),
+        ('05', 'Contato'),
+    )
+    pages = models.CharField('Paginas', max_length=2, choices=PAGES, help_text='Escolha aonde o Titulo deve ser inserido.')
+    title = models.CharField('Barra de Título', max_length=100)
 
+    class Meta:
+        verbose_name = 'Barra de Título'
+        verbose_name_plural = 'Barra de Título'
 
+    def __str__(self):
+        return self.title
+        
+ 
 class Logo(models.Model):
     title = models.CharField('Título/Alt', max_length=100)
     image = models.ImageField('Logo', upload_to='images')
