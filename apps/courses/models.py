@@ -47,7 +47,7 @@ class Course(models.Model):
     teacher = models.ForeignKey(Teacher, verbose_name='Professor', on_delete=models.CASCADE, blank=True, null=True)
     price = models.DecimalField('Preço', max_digits=19, decimal_places=2, help_text='Informe o valor sem o símbolo da moeda.')
     url = models.URLField('Link de Compra')
-    platform = models.ForeignKey(Platform, verbose_name='Plataforma', blank=True, null=True, on_delete=models.SET_NULL, default=1)
+    platform = models.ForeignKey(Platform, verbose_name='Plataforma', blank=True, null=True, on_delete=models.SET_NULL)
     description = RichTextField('Descrição')
     image = models.ImageField('Imagem do curso', upload_to='images')
     is_active = models.BooleanField('Curso Ativo?', default=True, help_text='Somente cursos ativos serão visíveis.')
