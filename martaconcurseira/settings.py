@@ -88,6 +88,7 @@ TEMPLATES = [
                 'pages.custom_context_processors.get_logo',
                 'pages.custom_context_processors.get_ga_code',
                 'pages.custom_context_processors.get_scripts',
+                'pages.custom_context_processors.get_title_bar',
             ],
         },
     },

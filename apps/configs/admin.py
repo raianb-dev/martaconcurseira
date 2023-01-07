@@ -1,8 +1,11 @@
 from django.contrib import admin
 
-from .models import Logo, SEOHome, GoogleAnalytics, Scripts
+from .models import Logo, SEOHome, GoogleAnalytics, Scripts,TitleBar
 
 # Register your models here.
+@admin.register(TitleBar)
+class TitleBarAdmin(admin.ModelAdmin):
+    list_display = ['title']
 
 
 @admin.register(Logo)
