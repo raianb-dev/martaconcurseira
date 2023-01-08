@@ -20,6 +20,20 @@
                         <span class="h4 fw-light">Resultado da pesquisa para: {{search}}</span>
                     </div>
                 </div>
+                <div class="col-12 ">
+                    <form action="{% url 'pages:search_filters' %}" class="row justify-content-center align-items-center">
+
+                        <div class="col-lg-10">
+                            <div class="input-group input-group-filter">
+                                <input type="text" aria-label="Last name" class="form-control form-control-lg" name="search" value="{{search}}" placeholder="Pesquisar...">
+                                <button class="btn btn-outline-secondary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div> 
+
+                    </form>
+                </div>
             </div>
 
             <div class="row justify-content-center">
@@ -57,6 +71,14 @@
                             </div>
                         </div>
                     {% endfor %}
+
+                {% else %}
+                <div class="col-12">
+                    <div class="py-4 text-center">
+                        <span class="h4 fw-bold">A busca não encontrou resultado para o termo digitado</span> 
+                    </div>
+                </div>
+                
                 {% endif %} 
                 
             </div>
