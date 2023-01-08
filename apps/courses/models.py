@@ -81,3 +81,28 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+
+
+class MaterialFree(models.Model):
+    name = models.CharField('Nome', max_length=100, help_text='Tente criar um título de 60 caracteres no máximo.')
+    short_description = models.CharField('Descrição curta', max_length=160, help_text='Tente criar uma descrição de até 160 caracteres.')
+    keywords = models.CharField('Palavras chaves', max_length=255, help_text='Separadas por virgula', default='')
+    url = models.URLField('Link de Download')
+    description = RichTextField('Descrição')
+    image = models.ImageField('Imagem do material', upload_to='images')
+    is_active = models.BooleanField('Material Ativo?', default=True, help_text='Somente materiais ativos serão visíveis.')
+    slug = AutoSlugField('URL Única', populate_from='name', unique=True, help_text='Preenchimento automático')
+    created_at = models.DateTimeField('Criado em', auto_now_add=True)
+    updated_at = models.DateTimeField('Atualizado em', auto_now=True)
+
+    class Meta:
+        verbose_name = 'Material Gratuito'
+        verbose_name_plural = 'Material Gratuito'
+
+    def __str__(self) -> str:
+        return self.name
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('courses:material_detail', kwargs={'slug': self.slug})

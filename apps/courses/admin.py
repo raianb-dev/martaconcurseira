@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from .models import Teacher, Course, Platform, Category
-from .forms import CourseForm
+from .models import Teacher, Course, Platform, Category, MaterialFree
+from .forms import CourseForm, MaterialFreeForm
 
 # Register your models here.
 
@@ -30,6 +30,12 @@ class CourseAdmin(admin.ModelAdmin, CSSAdminMixin):
     exclude = ('category','platform','course_id','author','teacher')
     list_per_page = 50
 
+@admin.register(MaterialFree)
+class MaterialFreeAdmin(admin.ModelAdmin, CSSAdminMixin):
+    form = MaterialFreeForm
+    list_display = ['name', 'is_active', 'created_at', 'updated_at']
+    search_fields = ['name']
+    list_per_page = 50
 
 # @admin.register(Platform)
 # class PlataformAdmin(admin.ModelAdmin):
