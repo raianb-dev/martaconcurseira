@@ -2,6 +2,7 @@ from django.db import models
 
 from autoslug import AutoSlugField
 from ckeditor.fields import RichTextField
+from apps.courses.managers import MeterialFreeManager
 
 # Create your models here.
 from courses.managers import CourseManager
@@ -95,6 +96,8 @@ class MaterialFree(models.Model):
     slug = AutoSlugField('URL Única', populate_from='name', unique=True, help_text='Preenchimento automático')
     created_at = models.DateTimeField('Criado em', auto_now_add=True)
     updated_at = models.DateTimeField('Atualizado em', auto_now=True)
+
+    objects = MeterialFreeManager()
 
     class Meta:
         verbose_name = 'Material Gratuito'

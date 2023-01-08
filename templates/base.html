@@ -75,7 +75,10 @@
                     </li>   
                     <li class="nav-item">
                         <a class="nav-link " href="{% url 'pages:contact' %}">Contato</a>
-                    </li>   
+                    </li>  
+                    <li class="nav-item">
+                        <a class="nav-link " href="{% url 'courses:material_list' %}">Material Gratuito</a>
+                    </li>
                 </ul>
 {#                <div class="ms-auto">#}
 {#                    <form action="" class="row">#}
@@ -107,7 +110,7 @@
                     <img src="{% static 'images/LOGO-MARTA-CONCURSEIRA-2.png' %}" width="150" alt="Logo Marta Concurseira">
                 </a>
             </div>
-            <div class="col-lg-5 col-sm-12">
+            <div class="col-lg-6 col-sm-12">
                 <ul class="nav">
                     <li><a href="/" class="p-3 text-decoration-none d-block">Home</a></li>
                     <li><a href="{% url 'courses:home' %}" class="p-3 text-decoration-none d-block">Cursos</a></li>
@@ -115,6 +118,7 @@
                     {% comment %} <li><a href="{% url 'pages:videos' %}" class="p-3 text-decoration-none d-block">Vídeos</a></li> {% endcomment %}
                     <li><a href="{% url 'pages:about_us' %}" class="p-3 text-decoration-none d-block">Sobre nós</a></li>
                     <li><a href="{% url 'pages:contact' %}" class="p-3 text-decoration-none d-block">Contato</a></li>
+                    <li><a href="{% url 'courses:material_list' %}" class="p-3 text-decoration-none d-block">Material Gratuito</a></li>
                 </ul>
             </div>
 

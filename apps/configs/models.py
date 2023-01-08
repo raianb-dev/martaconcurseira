@@ -7,8 +7,9 @@ class TitleBar(models.Model):
         ('01', 'Home'),
         ('02', 'Cursos'),
         ('03', 'Blog'),
-        ('04', 'About'),
+        ('04', 'Sobre nos'),
         ('05', 'Contato'),
+        ('06', 'Material Gratuito'),
     )
     pages = models.CharField('Paginas', max_length=2, choices=PAGES, help_text='Escolha aonde o Titulo deve ser inserido.')
     title = models.CharField('Barra de Título', max_length=100)

@@ -33,4 +33,5 @@ def get_title_bar(request):
         'title_blog': TitleBar.objects.filter(pages='03').first(),
         'title_about': TitleBar.objects.filter(pages='04').first(),
         'title_contact': TitleBar.objects.filter(pages='05').first(),
+        'title_material': TitleBar.objects.filter(pages='06').first(),
     }

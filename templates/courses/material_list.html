@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{title_material}}
+{% endblock %}
+
+{% block meta_description_keyword %}
+    <meta name="description" content="Materiais Gratuitos para você se preparar e conseguir a tão sonhada vaga" />
+    <meta name="keywords" content="Todos os materiais,Materiais,cursos,materiais gratuitos"/>
+{% endblock %}
+
+{% block main %}
+
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="py-4 text-center">
+                        <h1 class="display-4 fw-bold text-primary">Todos os Materiais Gratuitos</h1>
+                        <span class="h4 fw-light">Materiais para você se preparar e conseguir a tão sonhada vaga</span>
+                    </div>
+                </div>
+
+                <div class="col-12 py-4">
+                    <form action="{% url 'courses:material_list' %}" class="row justify-content-center align-items-center">
+
+                        <div class="col-lg-10">
+                            <div class="input-group input-group-filter">
+                                <input type="text" aria-label="Last name" class="form-control form-control-lg" name="search" value="{{search}}" placeholder="Pesquisar...">
+                                <button class="btn btn-outline-secondary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div> 
+
+                    </form>
+                </div>
+
+            </div>
+            {% if materials %}
+            <div class="row justify-content-center">
+                <div class="w-100"></div> 
+                {% for material in materials %}
+                    <div class="col-lg-3 col-sm-6">
+                    <div class="card shadow-sm border-0 mb-4">
+                        <a href="{{ material.get_absolute_url }}" class="card-img-top">
+                            <img src="{{ material.image.url }}" alt="{{ material.title }}" title="{{ material.title }}" class="card-img-top rounded-top">
+                        </a>
+                        <div class="card-body">
+                            <a href="{{ material.get_absolute_url }}" class="text-dark text-decoration-none">
+                                <strong>
+                                    {{ material.name }}
+                                </strong>
+                            </a>
+                            <span class="d-block mt-2 mb-3 text-secondary">{{ material.short_description|truncatewords:10 }}</span> 
+                        </div> 
+
+                       <div class="card-footer bg-white">
+                            <div class="d-flex align-items-end justify-content-end py-2">  
+                                <a href="{{ material.get_absolute_url }}" class="btn btn-danger btn-sm">Saiba mais</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if materials.paginator.num_pages > 1 %}
+            <div class="row">
+                <div class="co-12">
+                    <nav aria-label="Page navigation blog">
+                        <ul class="pagination justify-content-center">
+                            {% if materials.number != 1 %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?pagina={{ materials.previous_page_number }}"
+                                        tabindex="-1" aria-disabled="true">Anterior</a>
+                                </li>
+                            {% endif %}
+
+                            {% for p in materials.paginator.page_range %}
+                                <li class="page-item"><a class="page-link" href="?pagina={{ p }}">{{ p }}</a></li>
+                            {% endfor %}
+                            {% if materials.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?pagina={{ materials.next_page_number }}">Próximo</a>
+                                </li>
+                            {% endif %}
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            {% endif %}
+            {% else %}
+            <div class="col-12">
+                <div class="py-4 text-center">
+                    <span class="h4 fw-bold">Não encontramos materiais gratuitos cadastrados</span> 
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+{% endblock %}
