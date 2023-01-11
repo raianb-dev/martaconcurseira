@@ -122,11 +122,9 @@ def search_filters(request):
     search = request.GET.get('search', '')
     if search != '':
         courses_term = Course.objects.search(query=search)
-    else:
-        courses_term = Course.objects.order_by('-created_at') 
         
     context = {
-        'courses_term': courses_term, 
+        'courses_term': courses_term if search else None, 
         'search': search,
     }
     return render(request, template_name, context)
