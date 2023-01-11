@@ -9,7 +9,7 @@ from .models import Course, MaterialFree
 def home(request):
     template_name = 'courses/courses.html'
     courses = Course.objects.all().order_by('-created_at')
-    paginator = Paginator(courses, 12)
+    paginator = Paginator(courses, 15)
     page = request.GET.get('pagina')
     courses = paginator.get_page(page)
     context = {
@@ -30,9 +30,9 @@ def course_detail(request, slug):
 
 def material_list(request):
     template_name = 'courses/material_list.html'
-    materials = MaterialFree.objects.all().order_by('-created_at')
+    materials = MaterialFree.objects.filter(is_active=True).order_by('-created_at')
     
-    paginator = Paginator(materials, 12)
+    paginator = Paginator(materials, 15)
     page = request.GET.get('pagina')
     materials = paginator.get_page(page)
     search = request.GET.get('search', '')

@@ -38,10 +38,10 @@
 
             </div>
             {% if materials %}
-            <div class="row justify-content-center">
+            <div class="row row-cols-2 row-cols-md-5 g-4 justify-content-center">
                 <div class="w-100"></div> 
                 {% for material in materials %}
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="py-4">
                     <div class="card shadow-sm border-0 mb-4">
                         <a href="{{ material.get_absolute_url }}" class="card-img-top">
                             <img src="{{ material.image.url }}" alt="{{ material.title }}" title="{{ material.title }}" class="card-img-top rounded-top">
@@ -99,6 +99,22 @@
             </div>
             {% endif %}
         </div>
+
+        <div class="banner_full text-center bg-white py-4 my-lg-5 my-sm-3">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8162488622576384"
+         crossorigin="anonymous"></script>
+            <!-- Responsivo-Pagina-Home -->
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-8162488622576384"
+                data-ad-slot="5233912827"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
     </section>
 
 {% endblock %}

@@ -12,14 +12,10 @@
 {% block main %}
 
     <section class="py-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12">
-                    <div class="py-4 text-center">
-                        <h1 class="display-4 fw-bold text-primary">Resultados do Filtro</h1>
-                        <span class="h4 fw-light">Resultado da pesquisa para: {{search}}</span>
-                    </div>
-                </div>
+
+
+        <div class="container mb-5">
+            <div class="row">
                 <div class="col-12 ">
                     <form action="{% url 'pages:search_filters' %}" class="row justify-content-center align-items-center">
 
@@ -35,14 +31,25 @@
                     </form>
                 </div>
             </div>
+        </div>
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="py-4 text-center">
+                        <h1 class="display-4 fw-bold text-primary">Resultados do Filtro</h1>
+                        <span class="h4 fw-light">Resultado da pesquisa para: {{search}}</span>
+                    </div>
+                </div> 
+            </div>
 
             <div class="row justify-content-center">
                 <div class="w-100"></div>
  
                 {% if courses_term %}
-                    <div class="row justify-content-center"> 
+                    <div class="row row-cols-2 row-cols-md-5 g-4 justify-content-center"> 
                     {% for course in courses_term %}
-                        <div class="col-lg-3 col-sm-6 py-4">
+                        <div class=" py-4">
                             <div class="card shadow-sm border-0 mb-4">
                                 <a href="{{ course.get_absolute_url }}" class="card-img-top">
                                     <img src="{{ course.image.url }}" alt="{{ course.title }}"

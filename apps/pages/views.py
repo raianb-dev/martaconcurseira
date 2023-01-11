@@ -19,9 +19,9 @@ def home(request):
     template_name = 'pages/home.html'
     seo = SEOHome.objects.first()
     posts = Post.objects.filter(is_active=True,
-                                published_at__lte=datetime.datetime.today()).order_by('-published_at')[:4]
+                                published_at__lte=datetime.datetime.today()).order_by('-published_at')[:5]
     course_list = Course.objects.order_by('-created_at') 
-    paginator = Paginator(course_list, 8)
+    paginator = Paginator(course_list, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 

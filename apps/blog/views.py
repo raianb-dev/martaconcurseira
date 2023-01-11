@@ -12,7 +12,7 @@ def home(request):
     template_name = 'blog/blog_home.html'
     posts = Post.objects.filter(is_active=True, published_at__lte=datetime.datetime.today()).order_by('-published_at')
     last_post = posts.reverse().last()
-    paginator = Paginator(posts, 12)
+    paginator = Paginator(posts, 15)
     page = request.GET.get('pagina')
     posts = paginator.get_page(page)
     context = {

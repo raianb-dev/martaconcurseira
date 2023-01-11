@@ -12,6 +12,26 @@
 {% block main %}
 
     <section class="py-5">
+        
+        <div class="container mb-5">
+            <div class="row">
+                <div class="col-12 ">
+                    <form action="{% url 'pages:search_filters' %}" class="row justify-content-center align-items-center">
+
+                        <div class="col-lg-10">
+                            <div class="input-group input-group-filter">
+                                <input type="text" aria-label="Last name" class="form-control form-control-lg" name="search" placeholder="Pesquisar...">
+                                <button class="btn btn-outline-secondary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div> 
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12">
@@ -19,14 +39,14 @@
                         <h1 class="display-4 fw-bold text-primary">Todos os Cursos</h1>
                         <span class="h4 fw-light">Cursos para você se preparar e conseguir a tão sonhada vaga</span>
                     </div>
-                </div>
-            </div>
+                </div>  
+            </div> 
 
-            <div class="row justify-content-center">
+            <div class="row row-cols-2 row-cols-md-5 g-4 justify-content-center">
                 <div class="w-100"></div>
 
                 {% for course in courses %}
-                    <div class="col-lg-3 col-sm-6">
+                <div class=" ">
                     <div class="card shadow-sm border-0 mb-4">
                         <a href="{{ course.get_absolute_url }}" class="card-img-top">
                             <img src="{{ course.image.url }}" alt="{{ course.title }}" title="{{ course.title }}" class="card-img-top rounded-top">
