@@ -39,6 +39,8 @@ def material_list(request):
 
     if search:
         materials = MaterialFree.objects.search(query=search)
+    else:
+        materials = MaterialFree.objects.filter(is_active=True).order_by('-created_at')
   
     context = {
         'materials': materials,

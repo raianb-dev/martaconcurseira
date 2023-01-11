@@ -18,7 +18,7 @@
                         <div class="col-lg-10">
                             <div class="input-group input-group-filter">
                                 <input type="text" aria-label="Last name" class="form-control form-control-lg" name="search" placeholder="Pesquisar...">
-                                <button class="btn btn-outline-secondary" type="submit">
+                                <button class="btn btn-danger" type="submit">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
@@ -32,10 +32,10 @@
         <div class="container">
             {% if block1_banner %}
                 <div class="row align-items-center">
-                    <div class="col-lg-3 col-sm-12 banner_img_topo">
+                    <div class="col-lg-5 col-sm-12 banner_img_topo">
                         <img src="{{ block1_banner.image.url }}" alt="{{ block1_banner.title }}" title="{{ block1_banner.title }}" width="300">
                     </div>
-                    <div class="col-lg-9 col-sm-12 text-center">
+                    <div class="col-lg-7 col-sm-12 text-center">
                         <div class="w-75 m-auto">
                             <h1 class="d-none text-primary">{{ block1_banner.title }}</h1>
                             <h2 class="d-block text-primary">{{ block1_banner.title }}</h2>
