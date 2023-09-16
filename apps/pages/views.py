@@ -84,7 +84,7 @@ def contact(request):
         if form.is_valid():
             template_email = 'pages/email.txt'
             try:
-                form.send_email(form, ['martaconcurseira@gmail.com'], template_email)
+                form.send_email(form, ['concursadoestudante@gmail.com'], template_email)
             except BadHeaderError:
                 messages.error(request, 'Error. Mensagem não enviada.')
             messages.success(request, 'Mensagem enviada com sucesso.')
