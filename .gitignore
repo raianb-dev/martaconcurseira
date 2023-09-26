@@ -16,3 +16,4 @@ media
 *.jar
 class_diagram.png
 staticfiles
+**env/**

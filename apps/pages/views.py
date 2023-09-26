@@ -130,5 +130,5 @@ def search_filters(request):
     return render(request, template_name, context)
 
 
-def handler404(request, exception):
-    return render(request, 'pages/error/404.html') 
+def handler404(request, *args, **kwargs):
+    return render(request, 'pages/error/404.html', status=404)

@@ -1,8 +1,7 @@
 from django.urls import path
+from . import views
 
 app_name = 'pages'
-
-from . import views
 
 urlpatterns = [
     path('sobre-nos/', views.about_us, name='about_us'),
@@ -13,4 +12,5 @@ urlpatterns = [
     path('filtros/', views.search_filters, name='search_filters'),
     path('video/<slug:slug>/', views.video_detail, name='video_detail'),
     path('', views.home, name='home'),
+    path('<path:undefined_path>/', views.handler404, name='404'),  # Adicionando rota para erro 404
 ]
