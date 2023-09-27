@@ -1,0 +1,13 @@
+DEBUG=False
+SECRET_KEY=52(*645gt&d8-b8_wry5vw0ev%5^^9v_&mxudr%)gx_b8vysge
+ALLOWED_HOSTS=*
+DB_ENGINE=django.db.backends.postgresql
+DB_NAME=martaconcurseiradb
+DB_USER=martaconcurseirauser
+DB_PASSWORD=password123
+DB_HOST=localhost
+DB_PORT=5432
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_HOST_USER=martaconcurseira@gmail.com
+EMAIL_HOST_PASSWORD=tnfgymeijensgvcd
