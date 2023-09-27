@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.urls import re_path
+from django.views.generic import TemplateView
 
 app_name = 'pages'
 
@@ -12,5 +14,5 @@ urlpatterns = [
     path('filtros/', views.search_filters, name='search_filters'),
     path('video/<slug:slug>/', views.video_detail, name='video_detail'),
     path('', views.home, name='home'),
-    path('<path:undefined_path>/', views.handler404, name='404'),  # Adicionando rota para erro 404
+    re_path(r'^(?!.*\.(?:xml|jpg|png|html)$).*$', views.handler404, name='404'),
 ]
