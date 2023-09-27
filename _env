@@ -1,4 +1,4 @@
-DEBUG=False
+DEBUG=True
 SECRET_KEY=52(*645gt&d8-b8_wry5vw0ev%5^^9v_&mxudr%)gx_b8vysge
 ALLOWED_HOSTS=*
 DB_ENGINE=django.db.backends.postgresql
