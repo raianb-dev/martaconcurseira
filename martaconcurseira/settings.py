@@ -57,7 +57,7 @@ PROJECT_APPS = [
     'blog.apps.BlogConfig',
     'accounts.apps.AccountsConfig',
     'configs.apps.ConfigsConfig',
-    'sitemaps.apps.SitemapsConfig'
+    'sitemap.apps.SitemapConfig'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + PROJECT_APPS
@@ -157,7 +157,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 

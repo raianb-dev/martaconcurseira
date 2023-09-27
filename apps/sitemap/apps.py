@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class SitemapsConfig(AppConfig):
+class SitemapConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'sitemaps'
+    name = 'sitemap'

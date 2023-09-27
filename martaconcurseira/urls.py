@@ -10,6 +10,7 @@ urlpatterns = [
     path('cursos/', include('courses.urls', namespace='courses')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', include('pages.urls', namespace='pages')),
+
 ]
 
 # Configurando o manipulador de erro 404
